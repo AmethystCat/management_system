@@ -23,5 +23,10 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {
+    "jquery": "1.11.3",
+    "normalize-css": "normalize.css#~3.0.3",
+    "animate.css": "animation.css#~3.5.1"
+  }
 }

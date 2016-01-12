@@ -19,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/AmethystCat/management_system/issues"
   },
-  "homepage": "https://github.com/AmethystCat/management_system#readme"
+  "homepage": "https://github.com/AmethystCat/management_system#readme",
+  "devDependencies": {
+    "browser-sync": "^2.11.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-less-sourcemap": "^1.4.3",
+    "jade": "^1.11.0"
+  }
 }
