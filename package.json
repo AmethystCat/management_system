@@ -1,0 +1,23 @@
+{
+  "name": "ms",
+  "version": "1.0.0",
+  "description": "management system",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmethystCat/management_system.git"
+  },
+  "keywords": [
+    "background",
+    "management"
+  ],
+  "author": "HC",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AmethystCat/management_system/issues"
+  },
+  "homepage": "https://github.com/AmethystCat/management_system#readme"
+}

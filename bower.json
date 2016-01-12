@@ -1,0 +1,27 @@
+{
+  "name": "ms",
+  "description": "management system",
+  "main": "gulpfile.js",
+  "authors": [
+    "HC"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "background",
+    "management"
+  ],
+  "moduleType": [
+    "es6",
+    "globals",
+    "node"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
