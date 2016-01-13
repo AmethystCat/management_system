@@ -2,36 +2,36 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name=”renderer” content=”webkit”>
+
     <title>login</title>
-    <link rel="stylesheet" href="/bower_components/boot"/>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/temp/css/login.css"/>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-    <div class="logo">
-        <h4><a href="#"><img src="images/logoed.png" alt=""></a></h4>
-    </div>
-    <div class="lock-holder">
-        <div class="form-group pull-left input-username">
-            <div class="input-group">
-                <input type="text" class="form-control "  readonly="readonly" value="bootstrapguru">
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+    <div class="container">
+        <form class="form-signin">
+            <h3 class="form-signin-heading">后台管理系统登录</h3>
+            <label for="inputEmail" class="sr-only">账户名</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="账户名" required autofocus>
+            <label for="inputPassword" class="sr-only">密码</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
             </div>
-        </div>
-        <i class="fa fa-ellipsis-h dot-left"></i>
-        <i class="fa fa-ellipsis-h dot-right"></i>
-        <div class="form-group pull-right input-password">
-            <div class="input-group">
-                <input type="password" class="form-control " placeholder="************" >
-                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-            </div>
-        </div>
-    </div>
-    <div class="avatar">
-        <img src="images/profiles/one.png" alt="">
-    </div>
-    <div class="submit">
-        <button type="button" class="btn btn-success btn-submit"><i class="fa fa-unlock"></i> ENTER</button>
-    </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        </form>
+    </div> <!-- /container -->
+
 </body>
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 </html>

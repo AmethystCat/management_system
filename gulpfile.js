@@ -7,7 +7,7 @@ var browserSync = require('browser-sync').create();
 // 引入less，可创建sourcemap
 var less = require('gulp-less-sourcemap');
 // 添加浏览器前缀
-var cssprefix = require('gulp-autoprefixer');
+var autoprefixer = require('gulp-autoprefixer');
 // 编译jade
 var jade = require('jade');
 // js语法检查
@@ -26,14 +26,15 @@ var LESS_DIR = './src/less',
     JS_DIR = './src/js',
     JS = './src/js/*.js',
     TEMP_JS_DIR = './temp/js',
-    TEMP_JS = './temp/js/*.js';
-
+    TEMP_JS = './temp/js/*.js',
+    PAGE_DIR = './src/page',
+    PAGE = './src/page/*.*';
 // static server
 gulp.task('bs',function(){
 	browserSync.init({
 		server: {
 			baseDir:'./',
-			index:'./temp/index.html'
+			index:'./src/page/index.html'
 		}
 	});
 });
@@ -46,6 +47,13 @@ gulp.task('less',function(){
                 sourceMapRootpath:LESS_DIR
             }
         }))
+        .pipe(gulp.dest(CSS_DIR))
+});
+
+gulp.task('prefix',function(){
+    return gulp.src(CSS)
+        .pipe(plumber())
+        .pipe(autoprefixer())
         .pipe(gulp.dest(CSS_DIR))
 });
 
@@ -69,8 +77,11 @@ gulp.task('watch',function(){
         .on('change',function(file){
             browserSync.reload(file.path);
         });
-//    gulp.watch(JS,['destJs']);
     gulp.watch(JS,['hint'])
+        .on('change',function(file){
+            browserSync.reload(file.path);
+        });
+    gulp.watch(PAGE)
         .on('change',function(file){
             browserSync.reload(file.path);
         });
