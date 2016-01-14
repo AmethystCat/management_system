@@ -23,7 +23,7 @@ body {}
   border-radius: 0;
   background: @primary;
   .navbar-header {
-    width: 200px;
+    width: 280px;
     line-height: @navBarHeight;
     .nav-brand {
       font-size: 24px;
@@ -53,7 +53,7 @@ body {}
     height: @navBarHeight;
     width: @navBarHeight;
     background-color: @leftBackground;
-    font-size: 28px;
+    font-size: 30px;
     text-align: center;
     color: @primary;
     .transition(300ms ease);
@@ -212,6 +212,10 @@ body {}
       }
     }
   }
+}
+.submenu.current > a i.arrow-right {
+  .transition(200ms ease);
+  .transform(rotate(90deg));
 }
 .section-main-panel {
   min-height: 1000px;
