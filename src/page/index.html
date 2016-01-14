@@ -21,13 +21,30 @@
 	<div class="section-site-holder">
         <div class="section-top-navbar navbar navbar-default">
             <a class="toggle-left-sidebar" href="#">
-                <i class="glyphicon glyphicon-th"></i>
+                <i class="glyphicon glyphicon-th-list"></i>
             </a>
+            <!-- brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <a class="nav-brand" href="#">
                     <!--<img src="" alt="logo"/>-->
                     找冻品网后台管理系统
                 </a>
+            </div>
+            <!-- collect the nav links,forms and other content for toggling -->
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form action="" class="search-form">
+                            <div class="form-group">
+                                <input type="text" class="form-control nav-input-search" placeholder="请输入关键字搜索"/>
+                                <i class="glyphicon glyphicon-search search-icon"></i>
+                            </div>
+                        </form>
+                    </li>
+                    <li>
+                        <a href="#" class="logout"><i class="glyphicon glyphicon-log-out" title="退出"></i></a>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="section-main-holder">
@@ -46,14 +63,14 @@
                 <!-- /.user -->
                 <!-- menu -->
                 <ul class="nav nav-list">
-                    <li>
-                        <a href="">
+                    <li class="active">
+                        <a href="#">
                             <i class="glyphicon glyphicon-home"></i>
                             <span>未审核商品</span>
                         </a>
                     </li>
                     <li class="submenu">
-                        <a href="">
+                        <a href="#">
                             <i class="glyphicon glyphicon-home"></i>
                             <span>
                                 全部商品
@@ -68,13 +85,13 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="#">
                                     <i class="glyphicon glyphicon-leaf"></i>
                                     <span>二类商品</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="#">
                                     <i class="glyphicon glyphicon-leaf"></i>
                                     <span>三类商品</span>
                                 </a>
@@ -82,19 +99,19 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="#">
                             <i class="glyphicon glyphicon-home"></i>
                             <span>推荐商品</span>
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="#">
                             <i class="glyphicon glyphicon-home"></i>
                             <span>求购记录</span>
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="#">
                             <i class="glyphicon glyphicon-home"></i>
                             <span>常购列表</span>
                         </a>
@@ -106,4 +123,6 @@
         </div>
 	</div>
 </body>
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/src/js/index.js"></script>
 </html>

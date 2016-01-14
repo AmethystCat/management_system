@@ -16,12 +16,22 @@ body {}
 }
 /* left nav
 -------------------------------------------------------------*/
-.section-top-navbar {
+.section-top-navbar.navbar {
   height: 60px;
   margin-bottom: 0;
   border: none;
   border-radius: 0;
   background: @primary;
+  .navbar-header {
+    width: 200px;
+    line-height: @navBarHeight;
+    .nav-brand {
+      font-size: 24px;
+      padding: 0 0 0 20px;
+      line-height: 60px;
+      color: #fff;
+    }
+  }
   .toggle-left-sidebar {
     float: left;
     padding-left: 20px;
@@ -33,22 +43,55 @@ body {}
       .transition(all 800ms ease);
       transform-origin: center;
       &:hover {
-          .transform(rotate(720deg));
-          color: darken(#fff,50%);
+        .transform(rotate(720deg));
+        color: darken(#fff,50%);
       }
     }
   }
-  .navbar-header {
-    width: 200px;
-    line-height: @navBarHeight;
-    .nav-brand {
-      font-size: 24px;
-      padding: 0 0 0 20px;
-      line-height: 60px;
-      color: #fff;
+  .logout {
+    float: right;
+    height: @navBarHeight;
+    width: @navBarHeight;
+    background-color: @leftBackground;
+    font-size: 28px;
+    text-align: center;
+    color: @primary;
+    .transition(300ms ease);
+
+    &:hover {
+      background-color: lighten(@leftBackground,15%);
+      color: lighten(@primary,5%);
     }
   }
-
+  .search-form {
+    position: relative;
+    margin-top : 13px;
+    margin-right : 34px;
+    input {
+      height: 32px;
+      width: 155px;
+      border: 1px solid #fff;
+      border-radius: 16px;
+      padding-left: 30px;
+      background-color: #fff;
+      color: @primary;
+      box-shadow: none;
+      .transition(300ms ease);
+      &:focus {
+        width: 300px;
+        border-color: #fff;
+        outline: 0;
+        box-shadow: none;
+      }
+    }
+    .search-icon {
+      position: absolute;
+      top: 6px;
+      left: 5px;
+      font-size: 20px;
+      color: #c2c7c1;
+    }
+  }
 }
 .section-left-nav {
   @color: #80969c;
@@ -140,7 +183,7 @@ body {}
       color: darken(@leftSidebarLinkColor,25%);
     }
   }
-  .nav li:active > a {
+  .nav li.active > a {
     text-decoration: none;
     background-color: #1a2022;
     border-left: 3px solid @primary;
@@ -153,9 +196,9 @@ body {}
   // sub menu
   .nav > li ul {
     list-style: none;
-    padding-left: 0px;
+    padding-left: 0;
     margin-left: -1px;
-//    display: none;
+    display: none;
     background-color: lighten(@leftBackground,10%);
 
     > li {
@@ -174,5 +217,5 @@ body {}
   min-height: 1000px;
   margin-left: @leftSideBarWidth;
   padding-left: 10px;
-  background: saddlebrown;
+  //background: saddlebrown;
 }
