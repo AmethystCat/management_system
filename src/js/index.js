@@ -7,8 +7,6 @@
             return this.each(function () {
                 function b(c, b) {
                     $(c).parent(d).siblings().removeClass(e).children(f).slideUp(g);
-                    //$(c).parent(d).siblings().removeClass(e).find('.fa-chevron-right').addClass('fa-chevron-down');
-                   // $(c).parent(d).find('.fa-chevron-right').addClass('fa-chevron-down');
                     $(c).siblings(f)[b || h](b == "show" ? g : !1, function () {
                         $(c).siblings(f).is(":visible") ? $(c).parents(d).not(a.parents()).addClass(e) : $(c).parent(d).removeClass(e);
                         b == "show" && $(c).parents(d).not(a.parents()).addClass(e);
@@ -28,7 +26,6 @@
                     });
                 $.each(a.find("a"), function () {
                     $(this).click(function () {
-                        //$(this).find(' .fa-chevron-right').removeClass('fa-chevron-down');
                         b(this, h);
                     });
                     $(this).bind("activate-node", function () {
@@ -54,27 +51,53 @@ $(function () {
         $(this).parent().addClass('active');
         $(this).parents('.submenu').addClass('current').find('ul').css('display','block');
 
-        tab.create('test');        
+        var hasSub = $(this).parent().hasClass('submenu'),
+            tabName = $(this).attr('title'),
+            tabId = $(this).attr('href');
+            hasTab = $('#tab-list').find('a[href="'+tabId+'"]').length;
+        if ( !hasSub && !hasTab ) {
+            tab.create(tabId,tabName);
+            $('#tab-list li').children('a[href="'+tabId+'"]').tab('show');        
+        } else if ( hasTab ) {
+            $('#tab-list li').children('a[href="'+tabId+'"]').tab('show');
+        }
     });
     
-    $('#deltest').on('click',function(){
-        $('#tab-list li').find('a[href="#test"]').remove();
-        $('#test').remove();
+    $('#tab-list').on('click','.tab-del-btn',function(e){
+        e.stopPropagation();
+        var parentLi = $(this).parents('li'),
+            parentA = $(this).parent(),
+            hrefId = parentA.attr('href');
+        if (parentLi.hasClass('active')) {
+            var siblingA = parentLi.prev('li').find('a');
+            siblingA.tab('show');
+            $('ul.nav-list li a[href="'+siblingA.attr('href')+'"]').click();
+        }
+        parentLi.remove();
+        $(hrefId).remove();
     });
 
+    var count = true;
     var tab = {
-        create: function(c){
-            this.createNav($('#tab-list'),c);
+        create: function(c,n){
+            this.createNav($('#tab-list'),c,n);
             this.createContent($('#tab-content'),c);
+            $('#tab-list a[href="#test"]').tab('show');
         },
-        createNav: function(selector,c){
-            selector.append('<li role="presentation"><a href="#'+c+'" aria-controls="'+c+'" role="tab" data-toggle="tab">'+c+'</a></li>');
+        createNav: function(selector,c,n){
+            selector.append('<li role="presentation"><a href="'+c+'" aria-controls="'+c.slice(1)+'" role="tab" data-toggle="tab">'+n+' <i class="glyphicon glyphicon-remove tab-del-btn"></i></a></li>');
         },  
         createContent: function(selector,c){
-            // <div role="tabpanel" class="tab-pane" id="messages">contact</div>
-            var srcUrl = '/src/js/test.js';
-            selector.append('<div role="tabpanel" class="tab-pane" id="'+c+'">'+c+'</div>').parent().click();
-            $('#'+c).load('/src/page/test.html');
+            selector.append('<div role="tabpanel" class="tab-pane" id="'+c.slice(1)+'"></div>');
+            if (count) {
+                $(c).load('/src/page/test.html');
+                count = false;
+            } else {
+                // $(c).load('/src/page/test.html #table-w');
+                $(c).load('/src/page/index-form.html');
+                count = true;
+            }
+            
         }
     }
 });
