@@ -1,8 +1,6 @@
 /**
  * Created by Hc on 2015/11/6.
  */
-
-
 ;(function (global,factory) {
     if ( typeof module === 'object' && typeof module.exports === 'object' ){
         module.exports = global.document ?
@@ -131,7 +129,7 @@
 
         function ns(names){
             var parts = names.split('.'),
-                  current = H ;
+                current = H ;
             for ( var i in parts ) {
                 if ( !current[ parts[ i ] ] ) {
                     current[ parts[ i ] ] = {};
@@ -248,7 +246,7 @@
         });
         D.method('createDom',function(settings){
             var mask = '<div class="dialog-mask" style="position: fixed;width: 100%;height: 100%;top: 0; left: 0;z-index: 1000;background: rgba(0,0,0,0.4);"></div>',
-                dialogDom = '<div id="dialog-body" class="dialog-body" style="position: fixed;width: 0;height: 0;top: 50%;left: 50%;overflow: hidden;background: #fff;z-index: 1001;border-radius: 8px;transition: all 0.4s;">'+
+                dialogDom = '<div id="dialog-body" class="dialog-body animated zoomIn" style="position: fixed;width: '+settings.width+';height: 0;top: 50%;left: 50%;overflow: hidden;background: #fff;z-index: 1001;border-radius: 8px;">'+
                     '<h3 class="dialog-title" style="text-align: '+settings.titlePostion+'; margin: 0;padding: 5px 0;background: #ccc;color:#666;">'+settings.title+'</h3>'+
                     '<div class="dialog-content" style="width: 96%; height: '+(settings.height-75)+'px;;padding: 2%;color: #666;overflow: auto;word-break: break-all;">'+settings.content+'</div>'+
                     '<div class="dialog-btn-group" style="text-align: center; padding: 0;">'+
@@ -259,14 +257,14 @@
             $('body')
                 .append(mask)
                 .append(dialogDom);
-            setTimeout(function(){
-                $('#dialog-body').css({
-                    'width': settings.width,
-                    'height': settings.height,
-                    'marginTop': '-' + settings.height/2 +'px',
-                    'marginLeft': '-' + settings.width/2 +'px'
-                });
-            },100);
+            // setTimeout(function(){
+            //     $('#dialog-body').css({
+            //         'width': settings.width,
+            //         'height': settings.height,
+            //         'marginTop': '-' + settings.height/2 +'px',
+            //         'marginLeft': '-' + settings.width/2 +'px'
+            //     });
+            // },100);
         });
         D.method('destroy',function(){
             $('.dialog-mask').remove();
@@ -279,18 +277,12 @@
     H.isMobile = function(mobile) {
         var myreg = /^(((17[0-9]{1})|(13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/, 
             zuoji = /^0\d{2,3}-?\d{7,8}$/;
-        //if( !myreg.test(mobile) && !zuoji.test(mobile) ) { 
-        //   return false; 
-        //}
         return myreg.test(mobile) || zuoji.test(mobile);
     };
 
     H.isEmail = function(email) {
         var myreg = /^[^\[\]\(\)\\<>:;,@.]+[^\[\]\(\)\\<>:;,@]*@[a-z0-9A-Z]+(([.]?[a-z0-9A-Z]+)*[-]*)*[.]([a-z0-9A-Z]+[-]*)+$/g;
-        if (!myreg.test(email)) {
-            return false;
-        };
-        return true;
+        return myreg.test(email);
     }
     
     if ( typeof noGlobal === strundefined ){
