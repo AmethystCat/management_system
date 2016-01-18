@@ -246,7 +246,7 @@
         });
         D.method('createDom',function(settings){
             var mask = '<div class="dialog-mask" style="position: fixed;width: 100%;height: 100%;top: 0; left: 0;z-index: 1000;background: rgba(0,0,0,0.4);"></div>',
-                dialogDom = '<div id="dialog-body" class="dialog-body animated zoomIn" style="position: fixed;width: '+settings.width+';height: 0;top: 50%;left: 50%;overflow: hidden;background: #fff;z-index: 1001;border-radius: 8px;">'+
+                dialogDom = '<div id="dialog-body" class="dialog-body animated zoomIn" style="position: fixed;width: '+settings.width+'px;height: '+settings.height+'px;top: 50%;left: 50%;overflow: hidden;background: #fff;z-index: 1001;border-radius: 8px;">'+
                     '<h3 class="dialog-title" style="text-align: '+settings.titlePostion+'; margin: 0;padding: 5px 0;background: #ccc;color:#666;">'+settings.title+'</h3>'+
                     '<div class="dialog-content" style="width: 96%; height: '+(settings.height-75)+'px;;padding: 2%;color: #666;overflow: auto;word-break: break-all;">'+settings.content+'</div>'+
                     '<div class="dialog-btn-group" style="text-align: center; padding: 0;">'+
