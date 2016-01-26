@@ -6,8 +6,8 @@ import React from "react";
 
 let Hello = React.createClass({
     render(){
-        return <h1>Hello rasd</h1>;
-    }
+        return <h1>Hello react,react-hot-loader install</h1>;
+}
 });
 
 module.exports = Hello;
