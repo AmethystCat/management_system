@@ -50,54 +50,5 @@ $(function () {
         $('ul.nav-list li ').removeClass('active');
         $(this).parent().addClass('active');
         $(this).parents('.submenu').addClass('current').find('ul').css('display','block');
-
-        var hasSub = $(this).parent().hasClass('submenu'),
-            tabName = $(this).attr('title'),
-            tabId = $(this).attr('href');
-            hasTab = $('#tab-list').find('a[href="'+tabId+'"]').length;
-        if ( !hasSub && !hasTab ) {
-            tab.create(tabId,tabName);
-            $('#tab-list li').children('a[href="'+tabId+'"]').tab('show');
-        } else if ( hasTab ) {
-            $('#tab-list li').children('a[href="'+tabId+'"]').tab('show');
-        }
     });
-
-    $('#tab-list').on('click','.tab-del-btn',function(e){
-        e.stopPropagation();
-        var parentLi = $(this).parents('li'),
-            parentA = $(this).parent(),
-            hrefId = parentA.attr('href');
-        if (parentLi.hasClass('active')) {
-            var siblingA = parentLi.prev('li').find('a');
-            siblingA.tab('show');
-            $('ul.nav-list li a[href="'+siblingA.attr('href')+'"]').click();
-        }
-        parentLi.remove();
-        $(hrefId).remove();
-    });
-
-    var count = true;
-    var tab = {
-        create: function(c,n){
-            this.createNav($('#tab-list'),c,n);
-            this.createContent($('#tab-content'),c);
-            $('#tab-list a[href="#test"]').tab('show');
-        },
-        createNav: function(selector,c,n){
-            selector.append('<li role="presentation"><a href="'+c+'" aria-controls="'+c.slice(1)+'" role="tab" data-toggle="tab">'+n+' <i class="glyphicon glyphicon-remove tab-del-btn"></i></a></li>');
-        },
-        createContent: function(selector,c){
-            selector.append('<div role="tabpanel" class="tab-pane" id="'+c.slice(1)+'"></div>');
-            if (count) {
-                $(c).load('/src/page/test.html');
-                count = false;
-            } else {
-                // $(c).load('/src/page/test.html #table-w');
-                $(c).load('/src/page/index-form.html');
-                count = true;
-            }
-
-        }
-    }
 });
