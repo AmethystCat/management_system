@@ -4,21 +4,19 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import component from "../less/components.less";
-import variable from "../less/variable.less";
-import index from "../less/index.less";
-import table from "../less/table.less";
-
+import component from "../less/all-style.less";
 
 import Hello from "./test.jsx";
+import Main from "./main.jsx";
 
-var RootComponent = ReactDOM.render(<Hello/>,document.getElementById('section-main'));
+var RootComponent = ReactDOM.render(<Main/>,document.getElementById('main-holder'));
+var RootComponent2 =  ReactDOM.render(<Hello/>,document.getElementById('section-main1'));
 
 if (module.hot) {
     require('react-hot-loader/Injection').RootInstanceProvider.injectProvider({
         getRootInstances: function () {
             // help react hot loader figure out the root component instances on the page
-            return [RootComponent];
+            return [RootComponent,RootComponent2];
         }
     });
 }
