@@ -2,9 +2,25 @@
  * Created by john on 2016/1/27.
  */
 import React from 'react';
-import NavLi from './nav-li.jsx'
+import NavLi from './nav-li.jsx';
+import TabController from './main-tab.jsx';
 
 let NavController = React.createClass({
+    getInitialState(){
+        return {
+            tab:[
+                {
+                    id : 1,
+                    name : "home",
+                    selected : true
+                },
+                {
+                    id : 2,
+                    name : ""
+                }
+            ]
+        }
+    },
     componentWillMount(){
         console.log(this.props);
     },
@@ -82,22 +98,7 @@ let NavController = React.createClass({
                         {NavLis}
                     </ul>
                 </div>
-                <div className="section-main-panel" id="section-main">
-                    <div className="section-main-w">
-                        <div className="tabs-w">
-                            <ul className="nav nav-tabs" role="tablist" id="tab-list">
-                                <li role="presentation" className="active">
-                                    <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
-                                        Home
-                                    </a>
-                                </li>
-                            </ul>
-                            <div className="tab-content" id="tab-content">
-                                <div role="tabpanel" className="tab-pane active" id="home">home</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <TabController/>
             </div>
         )
     }
