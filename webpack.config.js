@@ -22,7 +22,7 @@
      entry: [
          'webpack/hot/dev-server',
          'webpack-dev-server/client?http://localhost:8080',
-         path.resolve(__dirname,'src/react/react-main.js')
+         path.resolve(__dirname,'src/react/entry.js')
      ],
      output: {
          path: path.resolve(__dirname,'build'),
