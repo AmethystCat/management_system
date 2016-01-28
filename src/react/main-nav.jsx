@@ -17,18 +17,25 @@ let NavController = React.createClass({
             ]
         }
     },
-    stateChanged(state){
+    stateUpdated(state){
         this.setState(state);
     },
     getChildContext: function() {
         return {
             tabs: this.state.tab,
-            changes:this.stateChanged
+            changes:this.stateUpdated
         };
     },
     childContextTypes: {
         tabs: React.PropTypes.array,
         changes: React.PropTypes.func
+    },
+    homeClickHandler(){
+        console.log(123);
+        this.state.tab.map((el,index)=>{
+            el.selected = (el.id == 0) ? true : false;
+        });
+        this.stateUpdated(this.state.tab);
     },
     render(){
         let NavLis = this.props.menu.data.menu.map(function (el, index) {
@@ -51,7 +58,7 @@ let NavController = React.createClass({
                         {NavLis}
                     </ul>
                 </div>
-                <TabController tabs={this.state.tab}/>
+                <TabController homeClickEvent={this.homeClickHandler} tabs={this.state.tab}/>
             </div>
         )
     }
