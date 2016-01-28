@@ -43,7 +43,7 @@ let Main = React.createClass({
                             },
                             {
                                 id:"2-3",
-                                name: "c类商品",
+                                name: "C类商品",
                                 url: "#productC",
                                 sub_menu: []
                             }
