@@ -12,18 +12,27 @@ let TabClose = React.createClass({
         tabs: React.PropTypes.array,
         changes: React.PropTypes.func
     },
-    clickToCloseTab(closeId){
+    clickToCloseTab(e){
+        console.log(e);
+        e.stopPropagation();
+        var flag = null;
         this.context.tabs.map((el,index)=>{
-            if (el.id == closeId) {
-                this.context.tabs.splice(index,1);
+            if (el.id == this.props.data.id && !el.selected ) {
+                //this.context.tabs.splice(index,1);
+                flag = index;
+            } else if (el.id == this.props.data.id && el.selected) {
+                //this.context.tabs.splice(index,1);
+                flag = index;
+                el.selected = false;
+                this.context.tabs[index-1].selected = true;
             }
         },this);
+        this.context.tabs.splice(flag,1);
         this.context.changes(this.context.tabs);
     },
     render(){
-        var closeId = this.props.data.id;
         return (
-            <i className="glyphicon glyphicon-remove tab-del-btn" onClick={this.clickToCloseTab.bind(this,closeId)}></i>
+            <i className="glyphicon glyphicon-remove tab-del-btn" onClick={this.clickToCloseTab}></i>
         );
     }
 });
