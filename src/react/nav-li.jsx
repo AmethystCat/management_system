@@ -1,17 +1,50 @@
 /**
  * Created by john on 2016/1/27.
  */
+/**
+ *  this.props.data=>{
+ *      id:xxx,
+ *      name:xxx,
+  *      sub_menu:xxx,
+  *      url:xxx
+ *  }
+ * */
 import React from "react";
 import Link from "./link.jsx";
 
 let NavLi = React.createClass({
-    componentWillMount(){},
+    contextTypes: {
+        tabs: React.PropTypes.array,
+        changes: React.PropTypes.func
+    },
+    clickToCreateTab(elData){
+        let menuData = (elData.id && elData.name) ? elData : this.props.data ;
+        let hasRendered = false;
+        this.context.tabs.map(function (el,index) {
+            if ( el.id != menuData.id ) {
+                el.selected = false;
+            }else if ( el.id == menuData.id ){
+                el.selected = true;
+                hasRendered = true;
+            }
+        }.bind(this));
+        if (hasRendered) {
+            this.context.changes(this.context.tabs);
+            return;
+        }
+        this.context.tabs.push({
+            id: menuData.id,
+            name: menuData.name,
+            selected: true
+        });
+        this.context.changes(this.context.tabs);
+    },
     judgeSub(){
         return this.props.data.sub_menu.length ? this.hasSub() : this.hasNoSub();
     },
     hasSub(){
         return (
-            <li className="sub_menu">
+            <li className="submenu">
                 <Link url={this.props.data.url} name={this.props.data.name}>
                     <i className="glyphicon glyphicon-fire"></i>
                     <span>{this.props.data.name}</span>
@@ -21,13 +54,13 @@ let NavLi = React.createClass({
                     {this.props.data.sub_menu.map(function(el,index){
                         return (
                             <li key={index}>
-                                <a href={el.url} title={el.name}>
+                                <Link id={"nid_" + el.id} url={el.url} name={el.name} clickEvent={this.clickToCreateTab.bind(this,el)}>
                                     <i className="glyphicon glyphicon-leaf"></i>
                                     <span>{el.name}</span>
-                                </a>
+                                </Link>
                             </li>
                         );
-                    })}
+                    }.bind(this))}
                 </ul>
             </li>
         );
@@ -35,7 +68,7 @@ let NavLi = React.createClass({
     hasNoSub(){
         return(
             <li>
-                <Link url={this.props.data.url} name={this.props.data.name}>
+                <Link id={"nid_" + this.props.data.id} url={this.props.data.url} name={this.props.data.name} clickEvent={this.clickToCreateTab}>
                     <i className="glyphicon glyphicon-fire"></i>
                     <span>{this.props.data.name}</span>
                 </Link>

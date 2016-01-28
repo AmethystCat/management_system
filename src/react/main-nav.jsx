@@ -10,22 +10,28 @@ let NavController = React.createClass({
         return {
             tab:[
                 {
-                    id : 1,
+                    id : 0,
                     name : "home",
                     selected : true
-                },
-                {
-                    id : 2,
-                    name : ""
                 }
             ]
         }
     },
-    componentWillMount(){
-        console.log(this.props);
+    stateChanged(state){
+        this.setState(state);
+    },
+    getChildContext: function() {
+        return {
+            tabs: this.state.tab,
+            changes:this.stateChanged
+        };
+    },
+    childContextTypes: {
+        tabs: React.PropTypes.array,
+        changes: React.PropTypes.func
     },
     render(){
-        var NavLis = this.props.menu.data.menu.map(function (el, index) {
+        let NavLis = this.props.menu.data.menu.map(function (el, index) {
             return <NavLi key={index} data={el}/>;
         });
         return (
@@ -42,63 +48,10 @@ let NavController = React.createClass({
                         </div>
                     </div>
                     <ul className="nav nav-list">
-                        {/*<li className="active">
-                            <a href="#unaudited" title="未审核商品">
-                                <i className="glyphicon glyphicon-home"></i>
-                                <span>未审核商品</span>
-                            </a>
-                        </li>
-                        <li className="submenu">
-                            <a href="#all" className="dropdown" title="全部商品">
-                                <i className="glyphicon glyphicon-fire"></i>
-                            <span>
-                                全部商品
-                                <i className="glyphicon glyphicon-menu-right arrow-right"></i>
-                            </span>
-                            </a>
-                            <ul className="animated fadeInDown">
-                                <li>
-                                    <a href="#all-category1" title="一类商品">
-                                        <i className="glyphicon glyphicon-leaf"></i>
-                                        <span>一类商品</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#all-category2" title="二类商品">
-                                        <i className="glyphicon glyphicon-leaf"></i>
-                                        <span>二类商品</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#all-category3" title="三类商品">
-                                        <i className="glyphicon glyphicon-leaf"></i>
-                                        <span>三类商品</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#recommend" title="推荐商品">
-                                <i className="glyphicon glyphicon-gift"></i>
-                                <span>推荐商品</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#history" title="求购记录">
-                                <i className="glyphicon glyphicon-star"></i>
-                                <span>求购记录</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#shoppinglist" title="常购列表">
-                                <i className="glyphicon glyphicon-pushpin"></i>
-                                <span>常购列表</span>
-                            </a>
-                        </li>*/}
                         {NavLis}
                     </ul>
                 </div>
-                <TabController/>
+                <TabController tabs={this.state.tab}/>
             </div>
         )
     }

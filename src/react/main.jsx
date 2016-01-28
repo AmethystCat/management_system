@@ -19,25 +19,30 @@ let Main = React.createClass({
                 },
                 menu:[
                     {
+                        id:"1",
                         name: "已收款",
                         url: "#yishoukuan",
                         sub_menu: []
                     },
                     {
+                        id:"2",
                         name: "全部商品",
                         url: "....#allproducts",
                         sub_menu: [
                             {
+                                id:"2-1",
                                 name: "A类商品",
                                 url: "#productA",
                                 sub_menu: []
                             },
                             {
+                                id:"2-2",
                                 name: "B类商品",
                                 url: "#productB",
                                 sub_menu: []
                             },
                             {
+                                id:"2-3",
                                 name: "c类商品",
                                 url: "#productC",
                                 sub_menu: []
@@ -45,16 +50,19 @@ let Main = React.createClass({
                         ]
                     },
                     {
+                        id:"3",
                         name: "买家退款",
                         url: "#refund",
                         sub_menu: []
                     },
                     {
+                        id:"4",
                         name: "商家提现",
                         url: "#tixian",
                         sub_menu: []
                     },
                     {
+                        id:"5",
                         name: "汇总对账",
                         url: "#huizongduizhang",
                         sub_menu: []
