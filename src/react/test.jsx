@@ -7,7 +7,12 @@ import React from "react";
 let Hello = React.createClass({
 
     render(){
-        return <h1>Hello react,coasdasdsme on</h1>;
+        return (
+            <div>
+                <h1>Hello react,coasdasdsme on</h1>
+                <input type="text"/>
+            </div>
+        );
     }
 });
 

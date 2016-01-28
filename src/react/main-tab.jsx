@@ -7,6 +7,7 @@
  * */
 import React from "react";
 import TabClose from "./main-tab-close.jsx";
+import MainTabContent from "./main-tab-content.jsx";
 
 let TabController = React.createClass({
     navClick(id){
@@ -47,7 +48,9 @@ let TabController = React.createClass({
                                     var tid = "tid_" + el.id,
                                         isActive = el.selected ? "tab-pane active" : "tab-pane";
                                     return (
-                                        <div key={index} className={isActive} id={tid}>{el.name}</div>
+                                        <div key={index} className={isActive} id={tid}>
+                                            <MainTabContent name={el.name}/>
+                                        </div>
                                     );
                                 })
                             }
