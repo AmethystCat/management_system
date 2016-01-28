@@ -28,7 +28,7 @@ let TabController = React.createClass({
                                         isSelected = el.selected ? "active" : "";
                                     return (
                                       <li role="presentation" key={index} className={isSelected}>
-                                          <a href={tid} aria-controls={aria} role="tab" data-toggle="tab" onClick={this.navClick.bind(this,el.id)}>
+                                          <a href="#" aria-controls={aria} onClick={this.navClick.bind(this,el.id)}>
                                               {el.name}
                                               <span>&nbsp;</span>
                                               {closeBtn}
@@ -44,7 +44,7 @@ let TabController = React.createClass({
                                     var tid = "tid_" + el.id,
                                         isActive = el.selected ? "tab-pane active" : "tab-pane";
                                     return (
-                                        <div key={index} role="tabpanel" className={isActive} id={tid}>{el.name}</div>
+                                        <div key={index} className={isActive} id={tid}>{el.name}</div>
                                     );
                                 })
                             }
