@@ -10,7 +10,11 @@ import TabClose from "./main-tab-close.jsx";
 
 let TabController = React.createClass({
     navClick(id){
-        console.log('a clicked');
+        //console.log('a clicked');
+        if (id == 0) {
+            this.props.homeClickEvent();
+            return false;
+        }
         $('#nid_' + id)[0].click();
         return false;
     },
@@ -22,8 +26,7 @@ let TabController = React.createClass({
                         <ul className="nav nav-tabs" role="tablist" id="tab-list">
                             {
                                 this.props.tabs.map(function(el,index){
-                                    var tid = "#tid_" + el.id,
-                                        aria = "tid_" + el.id,
+                                    var aria = "tid_" + el.id,
                                         closeBtn = (el.id == 0) ? "" : <TabClose data={el}/>,
                                         isSelected = el.selected ? "active" : "";
                                     return (

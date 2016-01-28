@@ -13,15 +13,12 @@ let TabClose = React.createClass({
         changes: React.PropTypes.func
     },
     clickToCloseTab(e){
-        console.log(e);
         e.stopPropagation();
-        var flag = null;
+        let flag = null;
         this.context.tabs.map((el,index)=>{
             if (el.id == this.props.data.id && !el.selected ) {
-                //this.context.tabs.splice(index,1);
                 flag = index;
             } else if (el.id == this.props.data.id && el.selected) {
-                //this.context.tabs.splice(index,1);
                 flag = index;
                 el.selected = false;
                 this.context.tabs[index-1].selected = true;
