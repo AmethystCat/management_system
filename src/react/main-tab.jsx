@@ -49,7 +49,7 @@ let TabController = React.createClass({
                                         isActive = el.selected ? "tab-pane active" : "tab-pane";
                                     return (
                                         <div key={index} className={isActive} id={tid}>
-                                            <MainTabContent name={el.name}/>
+                                            <TabContentControl contentId={el.id} name={el.name}/>
                                         </div>
                                     );
                                 })

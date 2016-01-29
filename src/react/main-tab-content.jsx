@@ -1,7 +1,8 @@
 import React from  "react";
 import Hello from  "./test.jsx";
+import Hello1 from  "./test1.jsx";
 
-let MainTabContent = React.createClass({
+let TabContentControl = React.createClass({
     render(){
         return (
             <div>
@@ -12,4 +13,4 @@ let MainTabContent = React.createClass({
     }
 });
 
-module.exports = MainTabContent;
+module.exports = TabContentControl;

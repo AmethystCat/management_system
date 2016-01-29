@@ -5,12 +5,17 @@
 import React from "react";
 
 let Hello = React.createClass({
-
+    componentDidMount(){
+        var server = H.server;
+        server.test({},function(res){
+            console.log(res);
+        })
+    },
     render(){
         return (
             <div>
                 <h1>Hello react,coasdasdsme on</h1>
-                <input type="text"/>
+                <input type="text" placeholder="我是test"/>
             </div>
         );
     }

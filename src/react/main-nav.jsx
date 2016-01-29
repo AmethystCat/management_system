@@ -54,10 +54,12 @@ let NavController = React.createClass({
                             <i className="glyphicon glyphicon-heart" aria-hidden="true"></i>
                         </div>
                     </div>
+                    {/*nav left menu*/}
                     <ul className="nav nav-list">
                         {NavLis}
                     </ul>
                 </div>
+                {/*right tab menu*/}
                 <TabController homeClickEvent={this.homeClickHandler} tabs={this.state.tab}/>
             </div>
         )

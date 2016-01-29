@@ -22,6 +22,10 @@ let TabClose = React.createClass({
                 flag = index;
                 el.selected = false;
                 this.context.tabs[index-1].selected = true;
+                $('.nav.nav-list')
+                    .find('a')
+                    .parent()
+                    .removeClass('active');
             }
         },this);
         this.context.tabs.splice(flag,1);
