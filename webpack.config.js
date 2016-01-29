@@ -46,7 +46,7 @@
              // loader is disposed from right to left
              {
                  test: /\.less$/,
-                 loader: 'style-loader!css-loader!less-loader'
+                 loader: 'style-loader!css-loader?sourceMap!less-loader?sourceMap'
              },
              // 图片如果大于25kb的话会自动在它从书店 css文件中转换成 base64 字符串
              {
@@ -59,8 +59,20 @@
                  loader: 'url?limit=100000'
              }
 
+         ],
+         perLoaders:[
+             {
+                 test:/\.jsx?$/,
+                 include: 'src/react',
+                 loader: 'jshint-loader'
+             }
          ]
-     }
+     },
+     jshint: {
+        "esnext": true
+     },
+     // enable dev source
+     devtool: 'eval-source-map'
  };
 
 //module.exports = config;
