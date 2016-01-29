@@ -1,0 +1,20 @@
+{
+  "code": 0,
+  "data": {
+    "id":  1234456,
+    "main_order_no": "12320160127132112345",
+    "buyer_name": "张工",
+    "shop_name": "食品房子",
+    "pay_amount": 12300,
+    "order_amount": 12800,
+    "deduct_amount": 500,
+    "pay_channel": 1,        // 打款到银行
+    "money_place": 1,        // 支付宝
+    "order_operator_name": "晓欣",
+    "updated_at": "2016-01-25 10:32:11",  // 最后一次处理时间
+    "status": 2,
+    "page": 1,
+    "total_count": 200
+  },
+  "message": ""
+}

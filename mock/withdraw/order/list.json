@@ -1,0 +1,21 @@
+{
+  "code": 0,
+  "data": {
+    "id":  1234456,
+    "withdraw_no": "WD201501278895230823094",
+    "user_name": "王春",
+    "shop_name": "食品房子",
+    "withdraw_amount": 12300,
+    "sub_order_count": 3,
+    "bank_account_no": "955355548523388",
+    "bank_account_name": "王弟武",
+    "bank_name": "中国农业银行",
+    "bank_address": "高新支行",
+    "created_at": "2016-01-25 10:06:11",  // 申请记录时间
+    "updated_at": "2016-01-25 10:32:11",  // 最后一次处理时间
+    "status": 2,
+    "page": 1,
+    "total_count": 200
+  },
+  "message": ""
+}
