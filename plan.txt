@@ -2,7 +2,7 @@
 	dist：项目的最终的dist目录。
 		css：项目的css目录
 		img：图片目录
-		lib：库目录（jquery.js、H.js、echarts.js）
+		lib：库目录（jquery.js、zdp_base.js、echarts.js）
 		js：js目录（common.js、index.js...etc）
 		index.html（页面放置在根目录）
 		页面1.html

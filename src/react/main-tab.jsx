@@ -7,7 +7,7 @@
  * */
 import React from "react";
 import TabClose from "./main-tab-close.jsx";
-import MainTabContent from "./main-tab-content.jsx";
+import TabContentControl from "./main-tab-content.jsx";
 
 let TabController = React.createClass({
     navClick(id){
