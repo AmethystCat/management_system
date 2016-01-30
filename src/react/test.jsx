@@ -7,7 +7,7 @@ import React from "react";
 let Hello = React.createClass({
     componentDidMount(){
         var server = H.server;
-        server.test({},function(res){
+        server.home_data({},function(res){
             console.log(res);
         })
     },

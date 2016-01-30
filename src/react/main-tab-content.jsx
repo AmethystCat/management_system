@@ -3,6 +3,9 @@ import Hello from  "./test.jsx";
 import Hello1 from  "./test1.jsx";
 
 let TabContentControl = React.createClass({
+    componentWillMount(){
+        console.log(this.props);
+    },
     render(){
         return (
             <div>
