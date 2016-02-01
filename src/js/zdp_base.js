@@ -102,7 +102,7 @@
 
     H.isString = function (obj){
         return proUtils.type(obj) === 'string' ;
-    }
+    };
 
     H.getId = function (id) {
         return document.getElementById(id);
@@ -231,6 +231,9 @@
                     ok: true,
                     okCallback: null
                 };
+            if (H.isString(option)) {
+                option = {content:option};
+            }
             var settings = $.extend(true, defaults, option || {});
             this.render(settings);
         });
@@ -243,9 +246,13 @@
                 settings.okCallback && settings.okCallback();
                 _this.destroy();
             });
+
+            $('body').on('click','#dialog-mask',function(){
+                _this.destroy();
+            });
         });
         D.method('createDom',function(settings){
-            var mask = '<div class="dialog-mask" style="position: fixed;width: 100%;height: 100%;top: 0; left: 0;z-index: 1000;background: rgba(0,0,0,0.4);"></div>',
+            var mask = '<div class="dialog-mask" id="dialog-mask" style="position: fixed;width: 100%;height: 100%;top: 0; left: 0;z-index: 1000;background: rgba(0,0,0,0.4);"></div>',
                 dialogDom = '<div id="dialog-body" class="dialog-body animated zoomIn" style="position: fixed;width: '+settings.width+'px;height: '+settings.height+'px;top: 50%;left: 50%;overflow: hidden;background: #fff;z-index: 1001;border-radius: 8px;">'+
                     '<h3 class="dialog-title" style="text-align: '+settings.titlePostion+'; margin: 0;padding: 5px 0;background: #ccc;color:#666;">'+settings.title+'</h3>'+
                     '<div class="dialog-content" style="width: 96%; height: '+(settings.height-75)+'px;;padding: 2%;color: #666;overflow: auto;word-break: break-all;">'+settings.content+'</div>'+
@@ -283,7 +290,7 @@
     H.isEmail = function(email) {
         var myreg = /^[^\[\]\(\)\\<>:;,@.]+[^\[\]\(\)\\<>:;,@]*@[a-z0-9A-Z]+(([.]?[a-z0-9A-Z]+)*[-]*)*[.]([a-z0-9A-Z]+[-]*)+$/g;
         return myreg.test(email);
-    }
+    };
     
     if ( typeof noGlobal === strundefined ){
         window.H = H;
