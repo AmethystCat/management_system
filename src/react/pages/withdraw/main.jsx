@@ -1,9 +1,9 @@
 import React from "react";
-import Withdraw from "./withdraw.jsx";
+import WithDraw from "./withdraw.jsx";
 
 var Main = React.createClass({
     render(){
-        return <Withdraw/>;
+        return <WithDraw/>;
     }
 });
 

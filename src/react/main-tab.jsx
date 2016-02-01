@@ -2,6 +2,7 @@
  *this.props.tabs => {
     id : 0,
     name : "home",
+    url: "xxxx",
     selected : true
  * }
  * */
@@ -49,7 +50,7 @@ let TabController = React.createClass({
                                         isActive = el.selected ? "tab-pane active" : "tab-pane";
                                     return (
                                         <div key={index} className={isActive} id={tid}>
-                                            <TabContentControl contentId={el.id} name={el.name}/>
+                                            <TabContentControl contentId={el.id} name={el.name} url={el.url}/>
                                         </div>
                                     );
                                 })

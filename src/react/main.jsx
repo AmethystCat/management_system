@@ -21,13 +21,13 @@ let Main = React.createClass({
                     {
                         id:"1",
                         name: "已收款",
-                        url: "#yishoukuan",
+                        url: "/deposit/order/list.json",
                         sub_menu: []
                     },
                     {
                         id:"2",
                         name: "全部商品",
-                        url: "....#allproducts",
+                        url: "#allproducts",
                         sub_menu: [
                             {
                                 id:"2-1",
@@ -58,7 +58,7 @@ let Main = React.createClass({
                     {
                         id:"4",
                         name: "商家提现",
-                        url: "#tixian",
+                        url: "/withdraw/seller/list.json",
                         sub_menu: []
                     },
                     {

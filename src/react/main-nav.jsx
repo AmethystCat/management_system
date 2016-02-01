@@ -12,6 +12,7 @@ let NavController = React.createClass({
                 {
                     id : 0,
                     name : "home",
+                    url : "home",
                     selected : true
                 }
             ]

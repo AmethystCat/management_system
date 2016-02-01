@@ -35,6 +35,7 @@ let NavLi = React.createClass({
         this.context.tabs.push({
             id: menuData.id,
             name: menuData.name,
+            url: menuData.url,
             selected: true
         });
         this.context.changes(this.context.tabs);
