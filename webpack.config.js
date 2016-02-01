@@ -33,7 +33,7 @@
          loaders: [
              {
                  test: /\.jsx?$/,
-                 loaders: ['react-hot','babel-loader'],
+                 loaders: ['babel-loader'],
                  include: path.join(__dirname, 'src/react')
                  // 预处理设置已放入 .babelrc中，可以不用再config文件中声明预处理设置
                  //query: {presets:['react','es2015']}
