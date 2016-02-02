@@ -6,7 +6,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import component from "../less/all-style.less";
 
-import Hello from "./test.jsx";
 import Main from "./main.jsx";
 
 ReactDOM.render(<Main/>,document.getElementById('main-holder'));
