@@ -4,7 +4,12 @@ import NavController from "./main-nav.jsx"
 let Main = React.createClass({
     getInitialState(){
         return {
-            res:[]
+            res:{
+                data:{
+                    user:{},
+                    menu:[]
+                }
+            }
         };
     },
     componentWillMount(){
@@ -71,6 +76,11 @@ let Main = React.createClass({
             },
             message:"success"
         };
+        // let server = H.server;
+        // server.nav({},function(res){
+        //     console.log(res);
+        //     this.setState({res:res});
+        // }.bind(this));
         this.setState({res:res});
     },
     render(){

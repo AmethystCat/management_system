@@ -3,18 +3,18 @@ import React from "react";
 var Home = React.createClass({
     getInitialState(){
         return {
-            data:{
-                data:null,
-                name:null
+            user:{
+                name:null,
+                role:null
             }
         };
     },
     componentWillMount(){
         let server = H.server;
-        server.home_data({},function(res){
+        server.nav({},function(res){
             console.log(res);
             if (res.code == 0) {
-                this.setState({data:res.data});
+                this.setState({user:res.data.user});
             } else {
                 H.Modal(res.message);
             }
@@ -23,9 +23,8 @@ var Home = React.createClass({
     render(){
         return (
             <div>
-                Home panel
-                <div>{this.state.data.data}</div>
-                <div>{this.state.data.name}</div>
+                欢迎
+                <p>{this.state.user.name}（{this.state.user.role}）</p>
             </div>
         );
     }

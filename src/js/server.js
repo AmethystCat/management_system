@@ -89,7 +89,7 @@ var send = function (type, api, parameters, success, async) {
     /**
      * 首页
      * */
-    server.home_data = function (data, callback) {
+    server.nav = function (data, callback) {
         return send('get', contextPath + '/home.json', data, callback);
     };
 
