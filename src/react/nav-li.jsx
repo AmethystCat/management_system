@@ -18,8 +18,9 @@ let NavLi = React.createClass({
         changes: React.PropTypes.func
     },
     clickToCreateTab(elData){
-        let menuData = (elData.id && elData.name) ? elData : this.props.data ;
-        let hasRendered = false;
+        let menuData = (elData.id && elData.name) ? elData : this.props.data ,
+            hasRendered = false;
+
         this.context.tabs.map(function (el,index) {
             if ( el.id != menuData.id ) {
                 el.selected = false;
@@ -28,6 +29,7 @@ let NavLi = React.createClass({
                 hasRendered = true;
             }
         }.bind(this));
+
         if (hasRendered) {
             this.context.changes(this.context.tabs);
             return;
@@ -38,6 +40,7 @@ let NavLi = React.createClass({
             url: menuData.url,
             selected: true
         });
+
         this.context.changes(this.context.tabs);
     },
     judgeSub(){
@@ -55,7 +58,7 @@ let NavLi = React.createClass({
                     {this.props.data.sub_menu.map(function(el,index){
                         return (
                             <li key={index}>
-                                <Link id={"nid_" + el.id} url={el.url} name={el.name} clickEvent={this.clickToCreateTab.bind(this,el)}>
+                                <Link id={"nid_" + el.id} name={el.name} clickEvent={this.clickToCreateTab.bind(this,el)}>
                                     <i className="glyphicon glyphicon-leaf"></i>
                                     <span>{el.name}</span>
                                 </Link>
@@ -69,7 +72,7 @@ let NavLi = React.createClass({
     hasNoSub(){
         return(
             <li>
-                <Link id={"nid_" + this.props.data.id} url={this.props.data.url} name={this.props.data.name} clickEvent={this.clickToCreateTab}>
+                <Link id={"nid_" + this.props.data.id} name={this.props.data.name} clickEvent={this.clickToCreateTab}>
                     <i className="glyphicon glyphicon-fire"></i>
                     <span>{this.props.data.name}</span>
                 </Link>

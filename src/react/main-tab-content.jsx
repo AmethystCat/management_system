@@ -16,7 +16,6 @@ let TabContentControl = React.createClass({
         }
         return (
             <div>
-                {this.props.name}
                 {panelContent}
             </div>
         );
