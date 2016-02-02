@@ -3,7 +3,11 @@ import Deposit from "./deposit.jsx";
 
 var Main = React.createClass({
     render(){
-        return <Deposit/>;
+        return (
+            <div className="section-deposit">
+                <Deposit/>
+            </div>
+        )
     }
 });
 
