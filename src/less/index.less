@@ -221,3 +221,50 @@ body {}
   padding-top: 10px;
   //background: saddlebrown;
 }
+
+/* 已收款样式
+------------------------------------------------------------------*/
+.section-deposit {
+  @pad: 10px;
+  .section-filter {
+    padding: @pad 0;
+    input {
+      margin-right: @pad;
+    }
+    .search-w {
+      padding: @pad 0;
+      select {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      input {
+        border-left: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+    .time-search-w {
+      display: inline-block;
+    }
+    .btn-w {
+      margin-left: @pad*40;
+    }
+  }
+
+  .section-table {
+    @pad: 10px;
+    padding-right: @pad;
+    .table {
+      margin-bottom: 0;
+      thead {
+        background-color: #f3f3f3;
+        tr > th {
+          border-bottom-width: 1px;
+        }
+      }
+    }
+    nav {
+      text-align: center;
+    }
+  }
+}
