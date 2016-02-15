@@ -61,10 +61,15 @@ var PageCtrlBar = React.createClass({
             pageNum: n,
             _maxPage: max,
             numArr: arr
+        }, function () {
+            console.log("当前页：" + this.state.pageNum);
         });
     },
     componentWillMount: function () {
         this.setPageData(this.state.pageNum,this.props.maxPage);
+    },
+    componentWillReceiveProps(nextProps){
+        this.setPageData(this.state.pageNum,nextProps.maxPage);
     },
     render: function () {
         var firstDisable = "";

@@ -8,7 +8,7 @@ var React = require('react');
 var Btn = React.createClass({
     render: function () {
         return (
-            <button className="btn btn-default" onClick={this.props.btnEvent} >{this.props.name}</button>
+            <button className={"btn btn-default " + this.props.otherClass} onClick={this.props.btnEvent} >{this.props.name}</button>
         )
     }
 });

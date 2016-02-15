@@ -2,19 +2,22 @@
  * Created by Administrator on 2016/2/1.
  * 下拉选择
  */
-var React = require('react');
+import React from "react";
 
 /*选择下拉框,select标签;*/
 var DropDown = React.createClass({
     getInitialState: function() {
         return {
-            optionArr: ['hello1111111','hell2']
+            optionArr: []
         }
     },
     selChange: function () {
         if(this.props.changeEv) {
             this.props.changeEv(this.refs.selectNode.value);
         }
+    },
+    componentWillMount(){
+        this.setState({optionArr : this.props.dropdownData});
     },
     render: function () {
         return (
