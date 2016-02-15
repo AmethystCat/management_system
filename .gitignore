@@ -1,1 +1,7 @@
-# .idea
+.idea
+
+node_modules
+
+bower_components
+
+temp
