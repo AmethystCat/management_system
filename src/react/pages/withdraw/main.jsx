@@ -4,6 +4,7 @@ import WithDraw from "./withdraw.jsx";
 var Main = React.createClass({
     render(){
         return <WithDraw/>;
+
     }
 });
 

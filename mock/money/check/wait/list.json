@@ -1,0 +1,24 @@
+/*汇总对账未结算接口数据;*/
+// 成功
+{
+  "code": 0,
+  "data": {
+    "id": 1,
+    "balance": 100000,
+    "last_balance": 20000,
+    "deposit_amount": 70000,
+    "withdraw_amount": -10000,
+    "refund_amount": -10000,
+    "deduct_amount": -1000,
+    "payment_fee": -1000,
+    "loss_remove": 320000
+  },
+  "message": ""
+}
+// 失败
+/*
+{
+  "code": 501,
+  "data": [],
+  "message": "连接错误"
+}*/

@@ -28,7 +28,7 @@ var KeySearch = React.createClass({
     render: function (){
         return (
             <div className="search-w">
-                <DropDown changeEv={this.backSelVal} />
+                <DropDown dropdownData={this.props.dropdownMenus} changeEv={this.backSelVal} />
                 <input className="form-control" type="text" ref="key" />
                 <Btn name="搜 索" btnEvent={this.searchKey} />
             </div>

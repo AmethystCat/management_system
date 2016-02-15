@@ -30,7 +30,7 @@ var TimeSearch = React.createClass({
     render: function () {
         return (
             <div>
-                <DropDown />
+                <DropDown dropdownData={this.props.dropdownMenus}/>
                 <ChooseTime changeEv={this.changeHandlerStart} val={this.state.startTime} />
                 <ChooseTime changeEv={this.changeHandlerEnd} val={this.state.endTime} />
                 <Btn name="筛选" btnEvent={this.screening} />

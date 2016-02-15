@@ -1,6 +1,24 @@
 /**
  * Created by Administrator on 2016/1/29.
  * 表格组件
+ * @param headTextArr = ['收款ID','订单ID','付款人','实收金额','订单金额','优惠金额','付款方式','确认人','资金位置','付款确认时间','操作']
+ * @param data = [
+             {
+             "id":  1234456,
+             "main_order_no": "12320160127132112345",
+             "buyer_name": "张工",
+             "shop_name": "食品房子",
+             "pay_amount": 12300,
+             "order_amount": 12800,
+             "deduct_amount": 500,
+             "pay_channel": 2,
+             "money_place": 1,
+             "order_operator_name": "晓欣",
+             "updated_at": "2016-01-25 10:32:11",
+             "status": 2,
+             "page": 1,
+             "total_count": 200
+             }]
  */
 var React = require('react');
 
@@ -72,47 +90,13 @@ var TableBody = React.createClass({
 /*整个表*/
 var Table = React.createClass({
     render: function () {
-        //var headTextArr = ['收款ID','订单ID','付款人','实收金额','订单金额','优惠金额','付款方式','确认人','资金位置','付款确认时间','操作'];
-        var headTextArr = this.props.titles;
-        //var data = [
-        //    {
-        //        "id":  1234456,
-        //        "main_order_no": "12320160127132112345",
-        //        "buyer_name": "张 工",
-        //        "shop_name": "食品房子",
-        //        "pay_amount": 12300,
-        //        "order_amount": 12800,
-        //        "deduct_amount": 500,
-        //        "pay_channel": 1,        // 打款到银行
-        //        "money_place": 1,        // 支付宝
-        //        "order_operator_name": "晓欣",
-        //        "updated_at": "2016-01-25 10:32:11",  // 最后一次处理时间
-        //        "status": 2,
-        //        "page": 1,
-        //        "total_count": 200
-        //    },
-        //    {
-        //        "id":  1234456,
-        //        "main_order_no": "12320160127132112345",
-        //        "buyer_name": "张 工",
-        //        "shop_name": "食品房子",
-        //        "pay_amount": 12300,
-        //        "order_amount": 12800,
-        //        "deduct_amount": 500,
-        //        "pay_channel": 1,        // 打款到银行
-        //        "money_place": 1,        // 支付宝
-        //        "order_operator_name": "晓 欣",
-        //        "updated_at": "2016-01-25 10:32:11",  // 最后一次处理时间
-        //        "status": 2,
-        //        "page": 1,
-        //        "total_count": 200
-        //    }
-        //];
-        var data = this.props.res;
+        var headTextArr = this.props.titles,
+            data = this.props.res;
         return (
             <table className="table table-bordered table-hover table-responsive">
                 <thead><TableHead tableTile={headTextArr} /></thead>
-                <TableBody data={data} types={this.props.types} />
+                {/*<TableBody data={data} types={this.props.types} />*/}
+                {this.props.children}
             </table>
         )
     }

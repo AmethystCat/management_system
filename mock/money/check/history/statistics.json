@@ -1,0 +1,24 @@
+/*汇总对账总的历史对账接口数据;*/
+// 成功
+{
+  "code": 0,
+  "data": {
+    "deposit_amount": 112550,
+    "withdraw_amount": -112570,
+    "refund_amount": -8000,
+    "loss": -50000,
+    "deduct_amount": -6000,
+    "payment_fee": -18000,
+    "other_allowance": -26000,
+    "loss_remove": 42300
+  },
+  "message": ""
+}
+
+// 失败
+/*
+{
+  "code": 501,
+  "data": [],
+  "message": "连接错误"
+}*/

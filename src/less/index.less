@@ -224,7 +224,8 @@ body {}
 
 /* 已收款样式
 ------------------------------------------------------------------*/
-.section-deposit {
+.section-deposit,
+.section-withdraw{
   @pad: 10px;
   .section-filter {
     padding: @pad 0;
@@ -265,6 +266,20 @@ body {}
     }
     nav {
       text-align: center;
+    }
+  }
+}
+.section-withdraw {
+  .time-search-w {
+    float: left;
+  }
+  select {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    &+input {
+      border-left: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 }
