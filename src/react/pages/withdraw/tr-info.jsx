@@ -4,6 +4,7 @@
  * */
 
 import React from "react";
+import Table from "../../components/table/tables.js";
 
 let TrInfo = React.createClass({
     render(){
@@ -15,7 +16,6 @@ let TrInfo = React.createClass({
                     { this.props.infoFlag.user_name + "(" + this.props.infoFlag.shop_name + ")" }
                 </h3>
                 <div className="info-main-w">
-                    <p>asdsd</p>
                 </div>
             </div>
         )

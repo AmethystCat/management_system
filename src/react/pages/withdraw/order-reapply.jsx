@@ -41,8 +41,8 @@ let OrderReapply = React.createClass({
                         }
                 });
             },
-            closeBtn: true,
-            closeCallback(destroy){
+            cancel: true,
+            cancelCallback(destroy){
                 _this.props.currentPageDataFresh(_this.props.pagination);
                 destroy();
             }
