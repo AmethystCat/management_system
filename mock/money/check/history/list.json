@@ -1,11 +1,9 @@
-/*汇总对账历史对账接口数据;*/
-// 成功
 {
   "code": 0,
   "data": [
     {
       "id": 1,
-      "balance": 100000,
+      "balance": 100001,
       "last_balance": 20000,
       "deposit_amount": 70000,
       "withdraw_amount": -10000,
@@ -14,11 +12,11 @@
       "payment_fee": -1000,
       "other_allowance": -10000,
       "loss_remove": 330000,
-      "check_time": "2016-01-21 17:23:23"
+      "check_time": "2016-01-21 17:23:21"
     },
     {
       "id": 2,
-      "balance": 100000,
+      "balance": 100002,
       "last_balance": 20000,
       "deposit_amount": 70000,
       "withdraw_amount": -10000,
@@ -27,11 +25,11 @@
       "payment_fee": -1000,
       "other_allowance": -10000,
       "loss_remove": 330000,
-      "check_time": "2016-01-21 17:23:23"
+      "check_time": "2016-01-21 17:23:22"
     },
     {
       "id": 3,
-      "balance": 100000,
+      "balance": 100003,
       "last_balance": 20000,
       "deposit_amount": 70000,
       "withdraw_amount": -10000,
@@ -45,10 +43,3 @@
   ],
   "message": ""
 }
-// 失败
-/*
-{
-  "code": 501,
-  "data": [],
-  "message": "连接错误"
-}*/

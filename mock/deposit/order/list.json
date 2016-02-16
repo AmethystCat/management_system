@@ -1,6 +1,6 @@
 {
   "code": 0,
-  "data": {
+  "data": [{
     "id":  1234456,
     "main_order_no": "12320160127132112345",
     "buyer_name": "张工",
@@ -15,6 +15,6 @@
     "status": 2,
     "page": 1,
     "total_count": 200
-  },
+  }],
   "message": "success"
 }

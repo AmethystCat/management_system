@@ -20,28 +20,76 @@ import React from "react";
 import Table from "../../components/table/tables.js";
 import Search from "../../components/search/search.js";
 import TimeSearch from "../../components/time_search/time-search-option.js";
-import Btn from "../../components/btn/btn.js";
 import PageCtrlBar from "../../components/page/paging";
+import Btn from "../../components/btn/btn.js";
+import OrderCancel from "./order-cancel.jsx";
+import OrderPayAuto from "./order-pay-auto.jsx";
+import OrderPayManual from "./order-pay-manual.jsx";
+import OrderReapply from "./order-reapply.jsx";
+import TrInfo from "./tr-info.jsx";
 
 let WithDrawControl = React.createClass({
+    contextTypes: {
+        withDrawData: React.PropTypes.array,
+        currFresh: React.PropTypes.func
+    },
     getInitialState(){
         return {
-            a:'a'
+            infoPanelIsShow: false,
+            infoPanelFlag: {},
+            currentPage: 1
         }
     },
-    getAlternativeBtnGroups(status){
-        // 是否重新补款
+    getAlternativeBtnGroups(value){
+        let status = value.status;
         if (status == 2 || status == 5) {
-            return <Btn otherClass="btn-xs" name="重新补款"/>;
-        } else {
+            return <OrderReapply
+                        pagination={this.state.currentPage}
+                        currentPageDataFresh={this.getCurrentPageData}
+                        orderData={value}
+                    />;
+        } else if (status == 1) {
             return (
                 <div>
-                    <Btn otherClass="btn-xs" name="人工打款"/>&nbsp;
-                    <Btn otherClass="btn-xs" name="系统代付"/>&nbsp;
-                    <Btn otherClass="btn-xs" name="撤回提现"/>
+                    <OrderPayManual
+                        pagination={this.state.currentPage}
+                        currentPageDataFresh={this.getCurrentPageData}
+                        orderData={value}
+                    />&nbsp;
+                    <OrderPayAuto
+                        pagination={this.state.currentPage}
+                        currentPageDataFresh={this.getCurrentPageData}
+                        orderData={value}
+                    />&nbsp;
+                    <OrderCancel
+                        pagination={this.state.currentPage}
+                        currentPageDataFresh={this.getCurrentPageData}
+                        orderData={value}
+                    />
                 </div>
             );
+        } else {
+            return (<div>无</div>)
         }
+    },
+    getCurrentPageData(curr){
+        let currPage = curr;
+        this.setState({
+            currentPage: curr
+        }, ()=>{
+            this.context.currFresh(currPage);
+        });
+    },
+    showInfoPanel(value){
+        this.setState({
+            infoPanelIsShow: true,
+            infoPanelFlag: value
+        });
+    },
+    hideInfoPanel(){
+        this.setState({
+            infoPanelIsShow: false
+        })
     },
     render(){
         var headArr = ['ID','商家信息','提现金额','订单详情','收款帐号','开户行','申请时间','打款时间','状态','操作'],
@@ -67,7 +115,7 @@ let WithDrawControl = React.createClass({
                         <tbody>
                             {this.props.data.map(function(value,index){
                                 return (
-                                    <tr key={'deposit_tr_'+index}>
+                                    <tr key={'deposit_tr_' + index} onClick={_this.showInfoPanel.bind(_this,value)}>
                                         <td>{value.id}</td>
                                         <td>{value.user_name + "(" + value.shop_name + ")"}</td>
                                         <td>{value.amount}</td>
@@ -77,13 +125,17 @@ let WithDrawControl = React.createClass({
                                         <td>{value.created_at}</td>
                                         <td>{value.updated_at}</td>
                                         <td>{status[ value.status - 1 ]}</td>
-                                        <td>{_this.getAlternativeBtnGroups(value.status)}</td>
+                                        <td>{_this.getAlternativeBtnGroups(value)}</td>
                                     </tr>
                                 )
                             })}
                         </tbody>
                     </Table>
-                    <PageCtrlBar maxPage={this.props.pageNum}/>
+                    <PageCtrlBar clickCallback={this.getCurrentPageData} maxPage={this.props.pageNum}/>
+                </div>
+                <div className={ this.state.infoPanelIsShow ? "section-tr-info show" : "section-tr-info" }>
+                    <i className="info-close-btn" title="点击隐藏弹出层" onClick={this.hideInfoPanel}>close</i>
+                    <TrInfo infoFlag={this.state.infoPanelFlag}/>
                 </div>
             </div>
         );

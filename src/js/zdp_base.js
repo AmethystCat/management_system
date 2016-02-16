@@ -226,10 +226,14 @@
                     title: '提示信息',
                     titlePostion: 'center',
                     content: '',
+                    autoClose: true,
                     closeBtn: false,
+                    closeBtnText: "关闭",
                     closeCallback: null,
                     ok: true,
-                    okCallback: null
+                    okText: "确定",
+                    okCallback: null,
+                    maskClose: false
                 };
             if (H.isString(option)) {
                 option = {content:option};
@@ -243,21 +247,33 @@
             this.createDom(settings);
             //绑定事件
             $('#dialog-ok').on('click',function(event) {
-                settings.okCallback && settings.okCallback();
+                settings.okCallback && settings.okCallback(_this.destroy,$('#dialog-content'));
+                if (!settings.autoClose) return;
+                _this.destroy();
+            });
+
+            $('#dialog-close').on('click',function(event) {
+                settings.closeCallback && settings.closeCallback(_this.destroy,$('#dialog-content'));
+                if (!settings.autoClose) return;
                 _this.destroy();
             });
 
             $('body').on('click','#dialog-mask',function(){
-                _this.destroy();
+                if (settings.maskClose) {
+                    if (!settings.autoClose) return;
+
+                    _this.destroy();
+                }
             });
         });
         D.method('createDom',function(settings){
             var mask = '<div class="dialog-mask" id="dialog-mask" style="position: fixed;width: 100%;height: 100%;top: 0; left: 0;z-index: 1000;background: rgba(0,0,0,0.4);"></div>',
-                dialogDom = '<div id="dialog-body" class="dialog-body animated zoomIn" style="position: fixed;width: '+settings.width+'px;height: '+settings.height+'px;top: 50%;left: 50%;overflow: hidden;background: #fff;z-index: 1001;border-radius: 8px;">'+
-                    '<h3 class="dialog-title" style="text-align: '+settings.titlePostion+'; margin: 0;padding: 5px 0;background: #ccc;color:#666;">'+settings.title+'</h3>'+
-                    '<div class="dialog-content" style="width: 96%; height: '+(settings.height-75)+'px;;padding: 2%;color: #666;overflow: auto;word-break: break-all;">'+settings.content+'</div>'+
+                dialogDom = '<div id="dialog-body" class="dialog-body animated zoomIn" style="position: fixed;width: '+settings.width+'px;height: '+settings.height+'px;top: 50%;left: 50%;margin-top:'+(-settings.height/2)+'px;margin-left:'+(-settings.width/2)+'px;overflow: hidden;background: #fff;z-index: 1001;border-radius: 8px;">'+
+                    '<h4 class="dialog-title" style="text-align: '+settings.titlePostion+'; margin: 0;padding: 5px 0;background: #ccc;color:#666;">'+settings.title+'</h4>'+
+                    '<div class="dialog-content" id="dialog-content" style="width: 96%; height: '+(settings.height-70)+'px;;padding: 2%;color: #666;overflow: auto;word-break: break-all;">'+settings.content+'</div>'+
                     '<div class="dialog-btn-group" style="text-align: center; padding: 0;">'+
-                    '<button id="dialog-ok" class="dialog-ok" style="display: '+(settings.ok?'inline-block':'none')+';border: 0; border-radius: 3px; padding: 5px 15px; font-size: 14px; color:#666;">确定</button>'+
+                    '<button id="dialog-ok" class="dialog-ok btn btn-warning" style="display: '+(settings.ok?'inline-block':'none')+';border: 0; border-radius: 3px; margin: 0 5px; padding: 5px 15px; font-size: 14px; color:#fff;">'+settings.okText+'</button>'+
+                    '<button id="dialog-close" class="dialog-close btn btn-warning" style="display: '+(settings.closeBtn?'inline-block':'none')+';border: 0; border-radius: 3px; margin: 0 5px; padding: 5px 15px; font-size: 14px; color:#fff;">'+settings.closeBtnText+'</button>'+
                     '</div>'+
             '</div>';
             //append到页面
@@ -291,7 +307,12 @@
         var myreg = /^[^\[\]\(\)\\<>:;,@.]+[^\[\]\(\)\\<>:;,@]*@[a-z0-9A-Z]+(([.]?[a-z0-9A-Z]+)*[-]*)*[.]([a-z0-9A-Z]+[-]*)+$/g;
         return myreg.test(email);
     };
-    
+
+    H.priceSwitch = function(price) {
+        var money = price ? price/100 : -1;
+        return money;
+    };
+
     if ( typeof noGlobal === strundefined ){
         window.H = H;
     }

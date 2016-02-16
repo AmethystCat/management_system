@@ -36,9 +36,13 @@ var PageCtrlBar = React.createClass({
         }else if(n>=this.state._maxPage){
             n=this.state._maxPage;
         }
-        this.setPageData(n,this.state._maxPage);
+        // TODO 这样写纯属无奈之举，后续再看能不能优化
+        this.setPageData(n,this.state._maxPage,(n)=>{
+            this.props.clickCallback && this.props.clickCallback(n);
+        });
+
     },
-    setPageData: function (n,max) {
+    setPageData: function (n,max,callback) {
         var arr = [];
         if(max >= 9){
             if(n <= 5){
@@ -61,8 +65,9 @@ var PageCtrlBar = React.createClass({
             pageNum: n,
             _maxPage: max,
             numArr: arr
-        }, function () {
+        }, ()=>{
             console.log("当前页：" + this.state.pageNum);
+            callback && callback(n);
         });
     },
     componentWillMount: function () {
