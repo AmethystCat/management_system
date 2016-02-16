@@ -7,14 +7,14 @@
       "user_name": "王春",
       "shop_name": "食品房子",
       "amount": 12300,
-      "sub_order_count": 3,
+      "sub_order_count": 4,
       "bank_account_no": "955355548523388",
       "bank_account_name": "王弟武",
       "bank_name": "中国农业银行",
       "bank_address": "高新支行",
       "created_at": "2016-01-25 10:06:11",
       "updated_at": "2016-01-25 10:32:11",
-      "status": 2
+      "status": 1
     },
     {
       "id":  1234457,
@@ -29,9 +29,7 @@
       "bank_address": "高新支行",
       "created_at": "2016-01-25 10:06:11",
       "updated_at": "2016-01-26 10:32:11",
-      "status": 2,
-      "page": 1,
-      "total_count": 200
+      "status": 2
     },
     {
       "id":  1234456,
@@ -39,16 +37,14 @@
       "user_name": "张三",
       "shop_name": "食品房子",
       "amount": 12322,
-      "sub_order_count": 3,
+      "sub_order_count": 2,
       "bank_account_no": "955355548523388",
       "bank_account_name": "阿什杜德",
       "bank_name": "中国农业银行",
       "bank_address": "高新支行",
       "created_at": "2016-01-25 10:06:11",
       "updated_at": "2016-01-27 10:32:11",
-      "status": 1,
-      "page": 1,
-      "total_count": 200
+      "status": 3
     },
     {
       "id":  1234456,
@@ -56,16 +52,29 @@
       "user_name": "李大",
       "shop_name": "食品房子",
       "amount": 11100,
-      "sub_order_count": 3,
+      "sub_order_count": 33,
       "bank_account_no": "955355548523388",
       "bank_account_name": "阿斯大时代",
       "bank_name": "中国农业银行",
       "bank_address": "高新支行",
       "created_at": "2016-01-25 10:06:11",
       "updated_at": "2016-01-28 10:32:11",
-      "status": 3,
-      "page": 1,
-      "total_count": 200
+      "status": 4
+    },
+    {
+      "id":  1234456,
+      "batch_no": "WD201501278895230823094",
+      "user_name": "二二",
+      "shop_name": "阿斯",
+      "amount": 11100,
+      "sub_order_count": 13,
+      "bank_account_no": "955355548523388",
+      "bank_account_name": "阿斯大时代",
+      "bank_name": "中国农业银行",
+      "bank_address": "高新支行",
+      "created_at": "2016-01-25 10:06:11",
+      "updated_at": "2016-01-28 10:32:11",
+      "status": 5
     }
   ],
   "page": 1,
