@@ -127,24 +127,24 @@ var send = function (type, api, parameters, success, async) {
     };
     // 人工大款成功后，确认打款成功
     server.withdraw_order_pay_manual_confirm = function (data, callback) {
-        return send('get', contextPath + '/withdraw/order/pay/manual/confirm.json', data, callback);
+        return send('post', contextPath + '/withdraw/order/pay/manual/confirm.json', data, callback);
     };
     // 系统打款
     server.withdraw_order_pay_auto_do = function (data, callback) {
-        return send('get', contextPath + '/withdraw/order/pay/auto/do.json', data, callback);
+        return send('post', contextPath + '/withdraw/order/pay/auto/do.json', data, callback);
     };
     // 撤回打款
     server.withdraw_order_cancel = function (data, callback) {
-        return send('get', contextPath + '/withdraw/order/cancel.json', data, callback);
+        return send('post', contextPath + '/withdraw/order/cancel.json', data, callback);
     };
     // TODO 接收系统代付结果通知
 
     // 提款申请
     server.withdraw_order_apply = function (data, callback) {
-        return send('get', contextPath + '/withdraw/order/apply.json', data, callback);
+        return send('post', contextPath + '/withdraw/order/apply.json', data, callback);
     };
     // 财务进行重新补款
     server.withdraw_order_reapply = function (data, callback) {
-        return send('get', contextPath + '/withdraw/order/reapply.json', data, callback);
+        return send('post', contextPath + '/withdraw/order/reapply.json', data, callback);
     };
 })();
