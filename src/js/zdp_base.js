@@ -228,8 +228,10 @@
                     content: '',
                     autoClose: true,
                     closeBtn: false,
-                    closeBtnText: "关闭",
                     closeCallback: null,
+                    cancel: false,
+                    cancelCallback: null,
+                    cancelText: "关闭",
                     ok: true,
                     okText: "确定",
                     okCallback: null,
@@ -254,6 +256,11 @@
 
             $('#dialog-close').on('click',function(event) {
                 settings.closeCallback && settings.closeCallback(_this.destroy,$('#dialog-content'));
+                _this.destroy();
+            });
+
+            $('#dialog-cancel').on('click',function(event) {
+                settings.cancelCallback && settings.cancelCallback(_this.destroy,$('#dialog-content'));
                 if (!settings.autoClose) return;
                 _this.destroy();
             });
@@ -261,7 +268,6 @@
             $('body').on('click','#dialog-mask',function(){
                 if (settings.maskClose) {
                     if (!settings.autoClose) return;
-
                     _this.destroy();
                 }
             });
@@ -269,11 +275,11 @@
         D.method('createDom',function(settings){
             var mask = '<div class="dialog-mask" id="dialog-mask" style="position: fixed;width: 100%;height: 100%;top: 0; left: 0;z-index: 1000;background: rgba(0,0,0,0.4);"></div>',
                 dialogDom = '<div id="dialog-body" class="dialog-body animated zoomIn" style="position: fixed;width: '+settings.width+'px;height: '+settings.height+'px;top: 50%;left: 50%;margin-top:'+(-settings.height/2)+'px;margin-left:'+(-settings.width/2)+'px;overflow: hidden;background: #fff;z-index: 1001;border-radius: 8px;">'+
-                    '<h4 class="dialog-title" style="text-align: '+settings.titlePostion+'; margin: 0;padding: 5px 0;background: #ccc;color:#666;">'+settings.title+'</h4>'+
+                    '<h4 class="dialog-title" style="position: relative;text-align: '+settings.titlePostion+'; margin: 0;padding: 5px 0;background: #ccc;color:#666;">'+settings.title+'<i id="dialog-close" class="dialog-close" style="display: '+ (settings.closeBtn ? 'inline-block' : 'none') +';position: absolute;right: 5px;font-style: normal;cursor: pointer">X</i></h4>'+
                     '<div class="dialog-content" id="dialog-content" style="width: 96%; height: '+(settings.height-70)+'px;;padding: 2%;color: #666;overflow: auto;word-break: break-all;">'+settings.content+'</div>'+
                     '<div class="dialog-btn-group" style="text-align: center; padding: 0;">'+
                     '<button id="dialog-ok" class="dialog-ok btn btn-warning" style="display: '+(settings.ok?'inline-block':'none')+';border: 0; border-radius: 3px; margin: 0 5px; padding: 5px 15px; font-size: 14px; color:#fff;">'+settings.okText+'</button>'+
-                    '<button id="dialog-close" class="dialog-close btn btn-warning" style="display: '+(settings.closeBtn?'inline-block':'none')+';border: 0; border-radius: 3px; margin: 0 5px; padding: 5px 15px; font-size: 14px; color:#fff;">'+settings.closeBtnText+'</button>'+
+                    '<button id="dialog-cancel" class="dialog-cancel btn btn-warning" style="display: '+(settings.cancel?'inline-block':'none')+';border: 0; border-radius: 3px; margin: 0 5px; padding: 5px 15px; font-size: 14px; color:#fff;">'+settings.cancelText+'</button>'+
                     '</div>'+
             '</div>';
             //append到页面
