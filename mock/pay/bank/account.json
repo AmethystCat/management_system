@@ -1,0 +1,16 @@
+{
+  "code": 0,
+  "data": [
+    {
+      "bankNo":1,
+      "bankName":"中国农业银行",
+      "bankAccountNo":"43792801948098032"
+    },
+    {
+      "bankNo":2,
+      "bankName":"中国工商银行",
+      "bankAccountNo":"43792801948093035"
+    }
+  ],
+  "message": "成功"
+}
