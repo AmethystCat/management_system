@@ -14,6 +14,7 @@ let OrderReapply = React.createClass({
             _this = this;
         Modal({
             title: '请确认是否重新补款',
+            width: 280,
             autoClose: false,
             content:'<div>' +
                         '<h5>请认真确认，避免重新打款</h5>' +
@@ -43,7 +44,7 @@ let OrderReapply = React.createClass({
             },
             cancel: true,
             cancelCallback(destroy){
-                _this.props.currentPageDataFresh(_this.props.pagination);
+                _this.props.currentPageDataFresh({page: _this.props.pagination});
                 destroy();
             }
         });

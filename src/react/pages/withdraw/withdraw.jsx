@@ -5,7 +5,8 @@ var WithDraw = React.createClass({
     getInitialState(){
         return {
             data: [],
-            pageNum: 1
+            pageNum: 1,
+            currentPage: 1
         };
     },
     getChildContext: function() {
@@ -19,28 +20,37 @@ var WithDraw = React.createClass({
         currFresh: React.PropTypes.func
     },
     componentDidMount(){
-        this.getWithDrawData(1);
+        this.getWithDrawData({page: 1});
     },
-    getWithDrawData(pagination){
-        let server = H.server;
-        server.withdraw_order_list({
-            page: pagination|| 1
-        },(res)=>{
-            console.log(res);
-            if (res.code == 0) {
-                this.setState({
-                    data: res.data,
-                    pageNum: Math.ceil(res.total_count/40)
-                });
-            } else {
-                H.Modal(res.message);
-            }
+    getWithDrawData(param){
+        let server = H.server,
+            obj = param || {},
+            defaultParam = {
+                date_type : 1,
+                date_begin : '',
+                date_end : ''
+            },
+            params = Object.assign(defaultParam,obj);
+
+        this.setState({
+            currentPage: param.page
+        },()=>{
+            server.withdraw_order_list(params,(res)=>{
+                console.log(res);
+                if (res.code == 0) {
+                    this.setState({
+                        data: res.data,
+                        pageNum: Math.ceil(res.total_count/40)
+                    });
+                } else {
+                    H.Modal(res.message);
+                }
+            });
         });
     },
     render(){
-        console.log(this.state);
         return (
-            <WithDrawControl pageNum={this.state.pageNum} data={this.state.data}/>
+            <WithDrawControl currentPage={this.state.currentPage} pageNum={this.state.pageNum} data={this.state.data}/>
         );
     }
 });

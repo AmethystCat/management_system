@@ -37,14 +37,52 @@ let WithDrawControl = React.createClass({
         return {
             infoPanelIsShow: false,
             infoPanelFlag: {},
-            currentPage: 1
+            filterCondition: {},
+            btnGroupFilter: [
+                {
+                    name:"全部",
+                    selected:true,
+                    status: 0
+                },
+                {
+                    name:"待确认",
+                    selected:false,
+                    status: 1
+                },
+                {
+                    name:"已确认",
+                    selected:false,
+                    status: 2
+                },
+                {
+                    name:"处理中",
+                    selected:false,
+                    status: 3
+                },
+                {
+                    name:"已成功",
+                    selected:false,
+                    status: 4
+                },
+                {
+                    name:"处理失败",
+                    selected:false,
+                    status: 5
+                },
+                {
+                    name:"已撤回",
+                    selected:false,
+                    status: 6
+                }
+            ]
         }
     },
     getAlternativeBtnGroups(value){
+        // 根据状态返回不同的操作按钮给单元格
         let status = value.status;
         if (status == 2 || status == 5) {
             return <OrderReapply
-                        pagination={this.state.currentPage}
+                        pagination={this.props.currentPage}
                         currentPageDataFresh={this.getCurrentPageData}
                         orderData={value}
                     />;
@@ -52,17 +90,17 @@ let WithDrawControl = React.createClass({
             return (
                 <div>
                     <OrderPayManual
-                        pagination={this.state.currentPage}
+                        pagination={this.props.currentPage}
                         currentPageDataFresh={this.getCurrentPageData}
                         orderData={value}
                     />&nbsp;
                     <OrderPayAuto
-                        pagination={this.state.currentPage}
+                        pagination={this.props.currentPage}
                         currentPageDataFresh={this.getCurrentPageData}
                         orderData={value}
                     />&nbsp;
                     <OrderCancel
-                        pagination={this.state.currentPage}
+                        pagination={this.props.currentPage}
                         currentPageDataFresh={this.getCurrentPageData}
                         orderData={value}
                     />
@@ -72,12 +110,34 @@ let WithDrawControl = React.createClass({
             return (<div>无</div>)
         }
     },
-    getCurrentPageData(curr){
-        let currPage = curr;
+    getCurrentPageData(condition){
+        // 根据已有的状态跟新当前页的数据业务逻辑
+            // 与当前已有的条件进行合并
+        let newCondition = Object.assign(this.state.filterCondition,condition||{});
         this.setState({
-            currentPage: curr
+            filterCondition: newCondition
         }, ()=>{
-            this.context.currFresh(currPage);
+            this.context.currFresh(this.state.filterCondition);
+        });
+    },
+    showBtnGroupFilterResult(status){
+        // 与当前已有的条件进行合并
+        let newCondition = Object.assign(this.state.filterCondition,{status: status,page: 1}),
+            // 改变筛选按钮的选中状态
+            newBtnGroupFilter = this.state.btnGroupFilter.map((value,index)=>{
+                value.selected = (value.status === status);
+                return value;
+            });
+        // 更新页面的筛选条件的状态
+        this.setState({
+            filterCondition: newCondition,
+            btnGroupFilter: newBtnGroupFilter
+        },()=>{
+            let params = this.state.filterCondition;
+            if (!this.state.filterCondition.status) {
+                params.status = "";
+            }
+            this.context.currFresh(params);
         });
     },
     showInfoPanel(value){
@@ -93,8 +153,7 @@ let WithDrawControl = React.createClass({
     },
     render(){
         var headArr = ['ID','商家信息','提现金额','订单详情','收款帐号','开户行','申请时间','打款时间','状态','操作'],
-            status = ['待确认','已确认','处理中','已成功','处理失败','已撤回'],
-            _this = this;
+            status = ['待确认','已确认','处理中','已成功','处理失败','已撤回'];
         return (
             <div className="section-withdraw">
                 <div className="section-filter">
@@ -104,18 +163,23 @@ let WithDrawControl = React.createClass({
                             <TimeSearch dropdownMenus={['申请时间','打款时间']}/>
                         </div>
                         <div className="btn-group btn-w">
-                            <Btn otherClass="btn-primary" name="全部"/>
-                            <Btn name="已打款"/>
-                            <Btn name="未打款"/>
+                            {this.state.btnGroupFilter.map((value,index)=>{
+                                return <Btn
+                                        key={"btnFilter_" + index}
+                                        name={value.name}
+                                        otherClass={value.selected ? "btn-primary" : ""}
+                                        btnEvent={this.showBtnGroupFilterResult.bind(this,value.status)}
+                                    />
+                            })}
                         </div>
                     </form>
                 </div>
                 <div className="section-table">
                     <Table res={this.props.data} titles={headArr} types="1">
                         <tbody>
-                            {this.props.data.map(function(value,index){
+                            {this.props.data.map((value,index)=>{
                                 return (
-                                    <tr key={'deposit_tr_' + index} onClick={_this.showInfoPanel.bind(_this,value)}>
+                                    <tr key={'deposit_tr_' + index} onClick={this.showInfoPanel.bind(this,value)}>
                                         <td>{value.id}</td>
                                         <td>{value.user_name + "(" + value.shop_name + ")"}</td>
                                         <td>{value.amount}</td>
@@ -125,13 +189,13 @@ let WithDrawControl = React.createClass({
                                         <td>{value.created_at}</td>
                                         <td>{value.updated_at}</td>
                                         <td>{status[ value.status - 1 ]}</td>
-                                        <td>{_this.getAlternativeBtnGroups(value)}</td>
+                                        <td>{this.getAlternativeBtnGroups(value)}</td>
                                     </tr>
                                 )
                             })}
                         </tbody>
                     </Table>
-                    <PageCtrlBar clickCallback={this.getCurrentPageData} maxPage={this.props.pageNum}/>
+                    <PageCtrlBar clickCallback={this.getCurrentPageData} pageNum={this.props.currentPage} maxPage={this.props.pageNum}/>
                 </div>
                 <div className={ this.state.infoPanelIsShow ? "section-tr-info show" : "section-tr-info" }>
                     <i className="info-close-btn" title="点击隐藏弹出层" onClick={this.hideInfoPanel}>close</i>

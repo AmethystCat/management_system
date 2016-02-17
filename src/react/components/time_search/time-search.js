@@ -30,8 +30,8 @@ var TimeSearch = React.createClass({
     render: function () {
         return (
             <div className="time-search-w">
-                <ChooseTime changeEv={this.changeHandlerStart} val={this.state.startTime} />
-                <ChooseTime changeEv={this.changeHandlerEnd} val={this.state.endTime} />
+                <ChooseTime changeEv={this.changeHandlerStart} val={this.state.startTime} id="startTime" />
+                <ChooseTime changeEv={this.changeHandlerEnd} val={this.state.endTime} id="endTime" />
                 <Btn name="筛选" btnEvent={this.screening} />
             </div>
         )

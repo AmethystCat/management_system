@@ -37,12 +37,15 @@ var Table = React.createClass({
     render: function () {
         var keyName = this.props.keyName;
         var data = this.props.dataVal;
+        var textRight = {
+            textAlign: 'right'
+        };
         return (
             <table className="table table-bordered table-hover table-responsive">
                 <tbody>
                     {
                         keyName.map(function (name,index){
-                            return <tr key={index}><td>{name}</td><td>{data[index]}</td></tr>;
+                            return <tr key={index}><td>{name}</td><td style={textRight}>{data[index]}</td></tr>;
                         })
                     }
                 </tbody>
@@ -53,10 +56,97 @@ var Table = React.createClass({
 
 /*未结算*/
 var NotSettle = React.createClass({
+    orderClickHandler(e){
+        e.stopPropagation();
+        let server = H.server,
+            Modal = H.Modal,
+            _this = this;
+        Modal({
+            title: '其它补贴',
+            autoClose: false,
+            content:'<div>' +
+            '<h5>请认真填写正确的补贴金额</h5>' +
+            '<input type="password" id="pass_input" style="margin: 10px;padding-left: 10px;" placeholder="请输入财务二级密码">' +
+            '</div><div><input type="text" id="amount" style="margin: 10px;padding-left: 10px;" placeholder="请输入补贴金额"> 元</div>'+
+            '<div class="error-mes"></div>',
+            okText: '提交',
+            okCallback(destroy,el){
+                let pwd = $('#pass_input').val();
+                if (!pwd) {
+                    $('.error-mes').text('密码不能为空，请重新输入');
+                    return;
+                }
+                let amount = $('#amount').val();
+                _this.setState({
+                    amount: amount
+                });
+                if(!amount && amount>=0){
+                    amount = 0;
+                }else {
+                    amount = amount*100;
+                }
+                server.add_allowance({
+                    id: _this.state.data.id,
+                    amount: amount,
+                    operation_password: pwd
+                },(res)=>{
+                    if (res.code == 0) {
+                        el.html(res.message)
+                            .siblings()
+                            .children('#dialog-ok')
+                            .hide();
+                    }else{
+                        $('.error-mes').text(res.message);
+                    }
+                });
+            },
+            closeBtn: true,
+            closeCallback(destroy){
+                destroy();
+            }
+        });
+    },
+    clearingClickHandler(e){
+        e.stopPropagation();
+        let server = H.server,
+            Modal = H.Modal,
+            _this = this;
+        Modal({
+            title: '结算扎账',
+            autoClose: false,
+            content:'<div>' +
+            '<h5>请确认是否需要现在结算扎账</h5>' +
+            '</div>'+
+            '<div class="error-mes"></div>',
+            okText: '提交',
+            okCallback(destroy,el){
+                server.settle_accounts({
+                    id: _this.state.data.id
+                },(res)=>{
+                    if (res.code == 0) {
+                        el.html(res.message)
+                            .siblings()
+                            .children('#dialog-ok')
+                            .hide();
+                    }else{
+                        $('.error-mes').text(res.message);
+                    }
+                });
+            },
+            closeBtn: true,
+            closeCallback(destroy){
+                destroy();
+            }
+        });
+    },
     getInitialState(){
         return {
-            data: {},
-            id: 0
+            data: {
+                balance:0,last_balance:0,deposit_amount:0,withdraw_amount:0,refund_amount:0,deduct_amount:0,
+                payment_fee:0,loss_remove:0
+            },
+            id: 0,
+            amount: 0
         }
     },
     componentWillMount(){
@@ -73,6 +163,12 @@ var NotSettle = React.createClass({
     },
     render(){
         var data = this.state.data;
+        var amountXml = 0;
+        if(this.state.amount == 0){
+            amountXml = <a onClick={this.orderClickHandler}>填写</a> ;
+        }else {
+            amountXml = this.state.amount + "元"
+        }
         var val = [
             H.priceSwitch(data.balance)+"元",
             H.priceSwitch(data.last_balance)+"元",
@@ -81,7 +177,7 @@ var NotSettle = React.createClass({
             H.priceSwitch(data.refund_amount)+"元",
             H.priceSwitch(data.deduct_amount)+"元",
             H.priceSwitch(data.payment_fee)+"元",
-            <a>填写</a>,
+            amountXml,
             H.priceSwitch(data.loss_remove)+"元"
         ];
         return (
@@ -94,7 +190,7 @@ var NotSettle = React.createClass({
                 <div>
                     <Table keyName={this.props.keyName} dataVal={val} />
                 </div>
-                <div><button type="button" className="btn btn-primary btn-lg btn-block">结算扎账</button></div>
+                <div><button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.clearingClickHandler}>结算扎账</button></div>
             </div>
         )
     }
@@ -106,7 +202,10 @@ var HistoryList = React.createClass({
     getInitialState(){
         return {
             optionArr: [],  //下拉选择里面的选项;
-            history:[], //历史数据列表;
+            history:[{
+                balance:0,last_balance:0,deposit_amount:0,withdraw_amount:0,refund_amount:0,deduct_amount:0,
+                payment_fee:0,loss_remove:0,other_allowance:0
+            }], //历史数据列表;
             index: 0 //当前显示的某一期数据的ID;
         }
     },
@@ -140,6 +239,10 @@ var HistoryList = React.createClass({
     },
     render(){
         var data = this.state.history[this.state.index];
+        var xml = "";
+        if(this.state.optionArr.length > 0){
+            xml = <DropDown changeEv={this.setData} dropdownData={this.state.optionArr} selectVal={this.state.index} />;
+        }
         var val = [
             H.priceSwitch(data.balance)+"元",
             H.priceSwitch(data.last_balance)+"元",
@@ -154,7 +257,7 @@ var HistoryList = React.createClass({
         return (
             <div className="col-md-3">
                 <div className="top">
-                    <DropDown changeEv={this.setData} dropdownData={this.state.optionArr} val={this.state.index} />
+                    {xml}
                     <p>只有*3621农行卡才能做结算</p>
                 </div>
                 <Table keyName={this.props.keyName} dataVal={val} />
@@ -167,17 +270,18 @@ var HistoryList = React.createClass({
 var HistoryCount = React.createClass({
     getInitialState(){
         return{
-            data:{}
+            data:[]
         }
     },
     componentWillMount(){
         let server = H.server;
         server.history_count({},(res)=>{
-            console.log(res);
             if(res.code == 0){
                 this.setState({
                     data: res.data
                 })
+            } else {
+                H.Modal(res.message);
             }
         })
     },
@@ -188,8 +292,8 @@ var HistoryCount = React.createClass({
         var optionArr = ["全部"];
         var data = this.state.data;
         var val = [
-            H.priceSwitch(data.deposit_amount)+"元",
-            H.priceSwitch(data.withdraw_amount)+"元",
+            H.priceSwitch(data.deposit_amount || 0)+"元",
+            H.priceSwitch(data.withdraw_amount || 0)+"元",
             H.priceSwitch(data.refund_amount)+"元",
             H.priceSwitch(data.loss)+"元",
             H.priceSwitch(data.deduct_amount)+"元",

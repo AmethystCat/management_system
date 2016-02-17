@@ -36,9 +36,9 @@ var PageCtrlBar = React.createClass({
         }else if(n>=this.state._maxPage){
             n=this.state._maxPage;
         }
-        // TODO 这样写纯属无奈之举，后续再看能不能优化
+        // TODO 这样写纯属无奈，后续再看能不能优化
         this.setPageData(n,this.state._maxPage,(n)=>{
-            this.props.clickCallback && this.props.clickCallback(n);
+            this.props.clickCallback && this.props.clickCallback({page: n});
         });
 
     },
@@ -74,7 +74,13 @@ var PageCtrlBar = React.createClass({
         this.setPageData(this.state.pageNum,this.props.maxPage);
     },
     componentWillReceiveProps(nextProps){
-        this.setPageData(this.state.pageNum,nextProps.maxPage);
+        let pageNum = 1;
+        if(this.props.pageNum){
+            pageNum = this.props.pageNum;
+        }else {
+            pageNum = this.state.pageNum;
+        }
+        this.setPageData(pageNum,nextProps.maxPage);
     },
     render: function () {
         var firstDisable = "";

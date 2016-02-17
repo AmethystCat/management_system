@@ -14,6 +14,7 @@ let OrderPayAuto = React.createClass({
             _this = this;
         Modal({
             title: '请确认系统自动代付金额',
+            width: 320,
             autoClose: false,
             closeBtn: true,
             content: '<div class="auto-info">' +
@@ -31,10 +32,10 @@ let OrderPayAuto = React.createClass({
                     '</ul>' +
                     '</div>' +
                     '<div class="error-mes"></div>',
-            okText: '提交',
+            okText: '确认',
             okCallback(destroy,el){
                 let params = {
-                    id : _this.props.id ,
+                    id : _this.props.orderData.id ,
                     notice : $('#yes').prop('checked') ? 1 : 0
                 };
                 server.withdraw_order_pay_auto_do(params,(res)=>{
@@ -44,7 +45,7 @@ let OrderPayAuto = React.createClass({
                             .children('#dialog-ok')
                             .attr("disabled",true);
                         // 刷新当前页的数据
-                        _this.props.currentPageDataFresh(_this.props.pagination);
+                        _this.props.currentPageDataFresh({page: _this.props.pagination});
                         setTimeout(()=>{
                             destroy();
                         },2000);

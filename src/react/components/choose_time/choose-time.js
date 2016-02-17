@@ -14,6 +14,10 @@ var ChooseTime = React.createClass({
     },
     handleChange: function (event) {
         this.setState({val: event.target.value}, function () {
+            var t = new Date(this.state.val);
+            var TimeStr = t.getFullYear()+"-"+t.getMonth()+"-"+t.getDate()+" "+
+                t.getHours()+" : " + t.getMinutes()+ " : " + t.getSeconds();
+            event.target.setAttribute("data-time",TimeStr);
             if(this.props.changeEv){
                 this.props.changeEv(this.state.val);
             }
@@ -24,7 +28,7 @@ var ChooseTime = React.createClass({
     render: function () {
         var value = this.state.val;
         return (
-            <input className="form-control" type="datetime-local" value={this.props.val} onChange={this.handleChange} />
+            <input id={this.props.id} className="form-control" type="datetime-local" value={this.props.val} onChange={this.handleChange} />
         )
     }
 });

@@ -27,24 +27,87 @@ import PageCtrlBar from "../../components/page/paging";
 let DepositTableControl = React.createClass({
     getInitialState(){
         return {
-            a:'a'
+            filterCondition:{},
+            btnGroupFilter: [
+                {
+                    name:"全部",
+                    selected:true,
+                    money_place: 0
+                },
+                {
+                    name:"支付宝",
+                    selected:false,
+                    money_place: 1
+                },
+                {
+                    name:"农行卡",
+                    selected:false,
+                    money_place: 2
+                },
+                {
+                    name:"微信账户",
+                    selected:false,
+                    money_place: 3
+                }
+            ]
         }
     },
-    getBack(){
+    getBack(value){
+        let _this = this;
         H.Modal({
             content:"确认撤回该次收款？",
-            okCallback: function () {
-                console.log('成功');
+            autoClose: false,
+            closeBtn: true,
+            okCallback: function (destroy,el) {
+                let server = H.server;
+                function close(message){
+                    el.text(message)
+                        .siblings()
+                        .children('#dialog-ok')
+                        .attr('disabled','true');
+                    setTimeout(()=>{
+                        destroy();
+                    },2000);
+                }
+                server.deposit_order_cancel({id: value.id},(res)=>{
+                    if (res.code == 0) {
+                        close(res.message);
+                        _this.getPageData();
+                    } else {
+                        close(res.message);
+                    }
+                });
             }
         });
     },
+    showBtnGroupFilterResult(money_place){
+        // 与当前已有的条件进行合并
+        let newCondition = Object.assign(this.state.filterCondition,{money_place: money_place,page: 1}),
+            newBtnGroupFilter = this.state.btnGroupFilter.map((value,index)=>{
+                value.selected = (value.money_place === money_place);
+                return value;
+            });
+
+        this.setState({
+            filterCondition: newCondition,
+            btnGroupFilter: newBtnGroupFilter
+        },()=>{
+            let params = this.state.filterCondition;
+            if (!this.state.filterCondition.money_place) {
+                params.money_place = "";
+            }
+            this.props.getData(params);
+        });
+    },
+    getPageData(params){
+        let mergeParams = Object.assign(this.state.filterCondition,params||{});
+        console.log(this.state.filterCondition.page);
+        this.props.getData(mergeParams);
+    },
     render(){
         var headArr = ['收款ID','订单ID','付款人','实收金额','订单金额','优惠减免','付款方式','确认人','资金位置','付款确认时间','操作'],
-            pageNum = '1',
             pay_channel = ['打款','微信支付','支付宝'],
-            money_place = ['支付宝','农行','微信'],
-            _this = this;
-
+            money_place = ['支付宝','农行','微信'];
         return (
             <div className="section-deposit">
                 <div className="section-filter">
@@ -52,17 +115,21 @@ let DepositTableControl = React.createClass({
                         <Search dropdownMenus={['付款人','确认人']}/>
                         <TimeSearch/>
                         <div className="btn-group btn-w">
-                            <Btn otherClass="btn-primary" name="全部"/>
-                            <Btn name="支付宝"/>
-                            <Btn name="农行卡"/>
-                            <Btn name="微信"/>
+                            {this.state.btnGroupFilter.map((value,index)=>{
+                                return <Btn
+                                    key={"btnFilter_" + index}
+                                    name={value.name}
+                                    otherClass={value.selected ? "btn-primary" : ""}
+                                    btnEvent={this.showBtnGroupFilterResult.bind(this,value.money_place)}
+                                />
+                            })}
                         </div>
                     </form>
                 </div>
                 <div className="section-table">
                     <Table res={this.props.data} titles={headArr} types="1">
                         <tbody>
-                            {this.props.data.map(function(value,index){
+                            {this.props.data.map((value,index)=>{
                                 return (
                                     <tr key={'deposit_tr_'+index}>
                                         <td>{value.id}</td>
@@ -75,13 +142,13 @@ let DepositTableControl = React.createClass({
                                         <td>{value.order_operator_name}</td>
                                         <td>{money_place[ value.money_place - 1 ]}</td>
                                         <td>{value.updated_at}</td>
-                                        <td><Btn otherClass="btn-xs" btnEvent={_this.getBack.bind(_this,value,index)} name="撤回"/></td>
+                                        <td><Btn otherClass="btn-xs" btnEvent={this.getBack.bind(this,value)} name="撤回"/></td>
                                     </tr>
                                 )
                             })}
                         </tbody>
                     </Table>
-                    <PageCtrlBar maxPage={pageNum}/>
+                    <PageCtrlBar pageNum={this.props.currentPage}  maxPage={this.props.pageNum} clickCallback={this.getPageData}/>
                 </div>
             </div>
         );

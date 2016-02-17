@@ -8,23 +8,43 @@ import DepositTableControl from "./table-control.jsx";
 let Deposit = React.createClass({
     getInitialState(){
         return {
-            data: []
+            data: [],
+            pageNum: "",
+            currentPage: 1
         };
     },
-    componentWillMount(){
-        let server = H.server;
-        server.deposit_order_list({},(res)=>{
-            console.log(res);
-            if (res.code == 0) {
-                this.setState({data:res.data});
-            } else {
-                H.Modal(res.message);
-            }
+    componentDidMount(){
+        this.getDepositData({page: 1});
+    },
+    getDepositData(param){
+        let server = H.server,
+            obj = param || {},
+            defaultParam = {
+                date_begin : '',
+                date_end : ''
+            },
+            params = Object.assign(defaultParam,obj);
+        this.setState({
+            currentPage: param.page
+        },()=>{
+            server.deposit_order_list(params,(res)=>{
+                console.log(res);
+                if (res.code == 0) {
+                    this.setState({
+                        data: res.data,
+                        currentPage: params.page || 1,
+                        pageNum: Math.ceil(res.total_count/40)
+                    });
+                } else {
+                    H.Modal(res.message);
+                }
+            });
         });
+
     },
     render(){
         return (
-            <DepositTableControl data={this.state.data}/>
+            <DepositTableControl getData={this.getDepositData} currentPage={this.state.currentPage}  pageNum={this.state.pageNum} data={this.state.data}/>
         );
     }
 });

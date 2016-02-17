@@ -25,7 +25,7 @@ var DropDown = React.createClass({
             val = this.props.selectVal;
         }
         return (
-            <select className="form-control" onChange={this.selChange} ref="selectNode" val={val}>
+            <select value={val} className="form-control" onChange={this.selChange} ref="selectNode">
                 {
                     React.Children.map(this.state.optionArr,function (name,index) {
                         return <option value={index} >{name}</option>;
