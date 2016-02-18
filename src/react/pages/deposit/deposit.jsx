@@ -14,14 +14,14 @@ let Deposit = React.createClass({
         };
     },
     componentDidMount(){
-        this.getDepositData({page: 1});
+        this.getDepositData({status: 2,page: 1});
     },
     getDepositData(param){
         let server = H.server,
             obj = param || {},
             defaultParam = {
-                date_begin : '',
-                date_end : ''
+                date_begin : $('#deposit_startTime').val(),
+                date_end : $('#deposit_endTime').val()
             },
             params = Object.assign(defaultParam,obj);
         this.setState({
@@ -32,7 +32,6 @@ let Deposit = React.createClass({
                 if (res.code == 0) {
                     this.setState({
                         data: res.data,
-                        currentPage: params.page || 1,
                         pageNum: Math.ceil(res.total_count/40)
                     });
                 } else {

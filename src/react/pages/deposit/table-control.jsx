@@ -19,10 +19,10 @@
 **/
 import React from "react";
 import Table from "../../components/table/tables.js";
-import Search from "../../components/search/search.js";
-import TimeSearch from "../../components/time_search/time-search.js";
 import Btn from "../../components/btn/btn.js";
 import PageCtrlBar from "../../components/page/paging";
+import FuzzySearchControl from "./fuzzy-search-control.jsx";
+import TimeSearchControl from "./time-search-control.jsx";
 
 let DepositTableControl = React.createClass({
     getInitialState(){
@@ -80,9 +80,10 @@ let DepositTableControl = React.createClass({
             }
         });
     },
-    showBtnGroupFilterResult(money_place){
+    showBtnGroupFilterResult(money_place,e){
+        e.preventDefault();
         // 与当前已有的条件进行合并
-        let newCondition = Object.assign(this.state.filterCondition,{money_place: money_place,page: 1}),
+        let newCondition = Object.assign(this.state.filterCondition,{money_place: money_place,page: 1,status: 2}),
             newBtnGroupFilter = this.state.btnGroupFilter.map((value,index)=>{
                 value.selected = (value.money_place === money_place);
                 return value;
@@ -100,20 +101,20 @@ let DepositTableControl = React.createClass({
         });
     },
     getPageData(params){
-        let mergeParams = Object.assign(this.state.filterCondition,params||{});
+        let mergeParams = Object.assign(this.state.filterCondition,params||{},{status: 2});
         console.log(this.state.filterCondition.page);
         this.props.getData(mergeParams);
     },
     render(){
-        var headArr = ['收款ID','订单ID','付款人','实收金额','订单金额','优惠减免','付款方式','确认人','资金位置','付款确认时间','操作'],
+        var headArr = ['收款ID','订单ID','付款人','实收金额(元)','订单金额(元)','优惠减免(元)','付款方式','确认人','资金位置','付款确认时间','操作'],
             pay_channel = ['打款','微信支付','支付宝'],
             money_place = ['支付宝','农行','微信'];
         return (
             <div className="section-deposit">
                 <div className="section-filter">
                     <form action="" className="form-inline">
-                        <Search dropdownMenus={['付款人','确认人']}/>
-                        <TimeSearch/>
+                        <FuzzySearchControl searchHandler={this.getPageData} dropdownMenus={['付款人','确认人','店铺名']}/>
+                        <TimeSearchControl searchHandler={this.getPageData}/>
                         <div className="btn-group btn-w">
                             {this.state.btnGroupFilter.map((value,index)=>{
                                 return <Btn
@@ -134,10 +135,10 @@ let DepositTableControl = React.createClass({
                                     <tr key={'deposit_tr_'+index}>
                                         <td>{value.id}</td>
                                         <td>{value.main_order_no}</td>
-                                        <td>{value.buyer_name}</td>
-                                        <td>{value.pay_amount}</td>
-                                        <td>{value.order_amount}</td>
-                                        <td>{value.deduct_amount}</td>
+                                        <td>{value.buyer_name + "(" + value.shop_name + ")"}</td>
+                                        <td>{H.priceSwitch(value.pay_amount)}</td>
+                                        <td>{H.priceSwitch(value.order_amount)}</td>
+                                        <td>{H.priceSwitch(value.deduct_amount)}</td>
                                         <td>{pay_channel[ value.pay_channel - 1 ]}</td>
                                         <td>{value.order_operator_name}</td>
                                         <td>{money_place[ value.money_place - 1 ]}</td>

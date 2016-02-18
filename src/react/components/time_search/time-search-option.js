@@ -12,28 +12,42 @@ var Btn = require('../btn/btn.js');
 var TimeSearch = React.createClass({
     getInitialState: function () { /*初始state数据;*/
         return {
-            startTime:"2016-01-12T03:05",
-            endTime:"2016-01-12T03:06"
+            selVal:0
         }
     },
     changeHandlerStart: function(time){  /*从子组件传过来的开始时间;*/
-        this.setState({startTime: time});
+        //this.setState({startTime: time});
+        var endTimeVal = $("#"+this.props.prefix+"startTime").val();
+        if(time > endTimeVal){
+            H.Modal("结束时间不能小于开始时间");
+            return false;
+        }
     },
     changeHandlerEnd: function(time){  /*从子组件传过来的结束时间;*/
-        this.setState({endTime: time});
+        //this.setState({endTime: time});
+        var startTimeVal = $("#"+this.props.prefix+"startTime").val();
+        if(startTimeVal > time){
+            H.Modal("结束时间不能小于开始时间");
+            return false;
+        }
     },
-    screening: function (){ //筛选按键点击事件;
-        /*var endTimeVal = this.refs.endTime.value.trim();*/
-        //console.log(this.state.startTime);
-        //console.log(this.state.endTime);
+    backSelVal: function (val) {
+        this.setState({selVal:val},function () {
+            //alert(val);
+        });
+    },
+    searchSub: function (e) {
+        e.preventDefault();
+        var selVal = this.state.selVal;
+        this.props.emit && this.props.emit(selVal);
     },
     render: function () {
         return (
             <div>
-                <DropDown dropdownData={this.props.dropdownMenus}/>
-                <ChooseTime changeEv={this.changeHandlerStart} val={this.state.startTime} />
-                <ChooseTime changeEv={this.changeHandlerEnd} val={this.state.endTime} />
-                <Btn name="筛选" btnEvent={this.screening} />
+                <DropDown dropdownData={this.props.dropdownMenus} changeEv={this.backSelVal} selectVal={this.state.selVal} />
+                <ChooseTime changeHandler={this.changeHandlerStart} num="7" id={(this.props.prefix?this.props.prefix:"")+"startTime"} />
+                <ChooseTime changeHandler={this.changeHandlerEnd} num="0" id={(this.props.prefix?this.props.prefix:"")+"endTime"} />
+                <Btn name="筛选" btnEvent={this.searchSub} />
             </div>
         )
     }

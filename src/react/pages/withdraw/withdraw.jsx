@@ -27,8 +27,8 @@ var WithDraw = React.createClass({
             obj = param || {},
             defaultParam = {
                 date_type : 1,
-                date_begin : '',
-                date_end : ''
+                date_begin : $('#withdraw_startTime').val(),
+                date_end : $('#withdraw_endTime').val()
             },
             params = Object.assign(defaultParam,obj);
 

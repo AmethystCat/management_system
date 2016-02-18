@@ -18,10 +18,10 @@
 **/
 import React from "react";
 import Table from "../../components/table/tables.js";
-import Search from "../../components/search/search.js";
-import TimeSearch from "../../components/time_search/time-search-option.js";
 import PageCtrlBar from "../../components/page/paging";
 import Btn from "../../components/btn/btn.js";
+import FuzzySearchControl from "./fuzzy-search-control.jsx";
+import TimeOptionSearchControl from "./timeOption-search-control.jsx";
 import OrderCancel from "./order-cancel.jsx";
 import OrderPayAuto from "./order-pay-auto.jsx";
 import OrderPayManual from "./order-pay-manual.jsx";
@@ -120,7 +120,8 @@ let WithDrawControl = React.createClass({
             this.context.currFresh(this.state.filterCondition);
         });
     },
-    showBtnGroupFilterResult(status){
+    showBtnGroupFilterResult(status,e){
+        e.preventDefault();
         // 与当前已有的条件进行合并
         let newCondition = Object.assign(this.state.filterCondition,{status: status,page: 1}),
             // 改变筛选按钮的选中状态
@@ -152,16 +153,19 @@ let WithDrawControl = React.createClass({
         })
     },
     render(){
-        var headArr = ['ID','商家信息','提现金额','订单详情','收款帐号','开户行','申请时间','打款时间','状态','操作'],
+        var headArr = ['ID','商家信息','提现金额(元)','订单详情','收款帐号','开户行','申请时间','打款时间','状态','操作'],
             status = ['待确认','已确认','处理中','已成功','处理失败','已撤回'];
         return (
             <div className="section-withdraw">
                 <div className="section-filter">
                     <form action="" className="form-inline">
-                        <Search dropdownMenus={['名字','店铺名','收款名','收款帐号']}/>
+
+                        <FuzzySearchControl searchHandler={this.getCurrentPageData} dropdownMenus={['名字','店铺名','收款名','收款帐号']}/>
+
                         <div className="time-search-w">
-                            <TimeSearch dropdownMenus={['申请时间','打款时间']}/>
+                            <TimeOptionSearchControl timeSearchHandler={this.getCurrentPageData} dropdownMenus={['申请时间','打款时间']}/>
                         </div>
+
                         <div className="btn-group btn-w">
                             {this.state.btnGroupFilter.map((value,index)=>{
                                 return <Btn
@@ -175,6 +179,7 @@ let WithDrawControl = React.createClass({
                     </form>
                 </div>
                 <div className="section-table">
+
                     <Table res={this.props.data} titles={headArr} types="1">
                         <tbody>
                             {this.props.data.map((value,index)=>{
@@ -182,7 +187,7 @@ let WithDrawControl = React.createClass({
                                     <tr key={'deposit_tr_' + index} onClick={this.showInfoPanel.bind(this,value)}>
                                         <td>{value.id}</td>
                                         <td>{value.user_name + "(" + value.shop_name + ")"}</td>
-                                        <td>{value.amount}</td>
+                                        <td>{H.priceSwitch(value.amount)}</td>
                                         <td>{value.sub_order_count}</td>
                                         <td>{value.bank_account_no}</td>
                                         <td>{value.bank_name}</td>
@@ -195,8 +200,11 @@ let WithDrawControl = React.createClass({
                             })}
                         </tbody>
                     </Table>
+
                     <PageCtrlBar clickCallback={this.getCurrentPageData} pageNum={this.props.currentPage} maxPage={this.props.pageNum}/>
+
                 </div>
+
                 <div className={ this.state.infoPanelIsShow ? "section-tr-info show" : "section-tr-info" }>
                     <i className="info-close-btn" title="点击隐藏弹出层" onClick={this.hideInfoPanel}>close</i>
                     <TrInfo infoFlag={this.state.infoPanelFlag}/>

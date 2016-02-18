@@ -63,7 +63,6 @@ var NotSettle = React.createClass({
             _this = this;
         Modal({
             title: '其它补贴',
-            autoClose: false,
             content:'<div>' +
             '<h5>请认真填写正确的补贴金额</h5>' +
             '<input type="password" id="pass_input" style="margin: 10px;padding-left: 10px;" placeholder="请输入财务二级密码">' +
@@ -113,7 +112,6 @@ var NotSettle = React.createClass({
             _this = this;
         Modal({
             title: '结算扎账',
-            autoClose: false,
             content:'<div>' +
             '<h5>请确认是否需要现在结算扎账</h5>' +
             '</div>'+
@@ -178,7 +176,7 @@ var NotSettle = React.createClass({
             H.priceSwitch(data.deduct_amount)+"元",
             H.priceSwitch(data.payment_fee)+"元",
             amountXml,
-            H.priceSwitch(data.loss_remove)+"元"
+            H.priceSwitch(data.total_loss)+"元"
         ];
         return (
             <div className="col-md-3">
@@ -213,7 +211,7 @@ var HistoryList = React.createClass({
         let server = H.server;
         let optionArr = [];
         let id = 0;
-        server.history_data({},(res)=>{
+        server.history_data({size: 50},(res)=>{
             if(res.code == 0) {
                 for(var i = 0 ; i < res.data.length ; i++) {
                     optionArr[i] = "第" + res.data[i].id + " 期结算 " + res.data[i].check_time;
@@ -229,6 +227,8 @@ var HistoryList = React.createClass({
                     index: id,
                     selectVal: optionArr[id]
                 });
+            } else {
+                H.Modal(res.message);
             }
         });
     },
@@ -275,7 +275,12 @@ var HistoryCount = React.createClass({
     },
     componentWillMount(){
         let server = H.server;
-        server.history_count({},(res)=>{
+        var d=new Date();
+        d.getDate();
+        var m=d.getMonth()+1;
+        m = m>10?m:("0"+m);
+        var time = d.getFullYear()+'-'+m+'-'+d.getDate();
+        server.history_count({date_begin: '2016-01-01',date_end: time},(res)=>{
             if(res.code == 0){
                 this.setState({
                     data: res.data
