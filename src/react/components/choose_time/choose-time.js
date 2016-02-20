@@ -62,8 +62,19 @@ var ChooseTime = React.createClass({
     change: function (event){
         var val = this.refs.timeNode.value;
         var isTrue = this.props.changeHandler && this.props.changeHandler(val);
-        if(!isTrue) return;
-        return this.setState({val: val});
+        var _val = this.state.val;
+        var _this = this;
+        if(!isTrue){
+            H.Modal({
+                content: "结束时间不能小于开始时间",
+                okCallback: function(){
+                    $("#"+_this.props.id).val(_val);
+                }
+            });
+            this.setState({val: _val});
+        }else {
+            this.setState({val: val});
+        }
     },
     render: function () {
         return (
