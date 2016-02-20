@@ -69,7 +69,7 @@ let Main = React.createClass({
                     {
                         id:"5",
                         name: "汇总对账",
-                        url: "#huizongduizhang",
+                        url: "/money/check/wait/list",
                         sub_menu: []
                     }
                 ]
