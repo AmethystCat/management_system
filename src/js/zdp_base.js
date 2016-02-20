@@ -248,18 +248,18 @@
             //创建dom
             this.createDom(settings);
             //绑定事件
-            $('#dialog-ok').on('click',function(event) {
+            $('.dialog-ok').on('click',function(event) {
                 settings.okCallback && settings.okCallback(_this.destroy,$('#dialog-content'));
                 if (!settings.autoClose) return;
                 _this.destroy();
             });
 
-            $('#dialog-close').on('click',function(event) {
+            $('.dialog-close').on('click',function(event) {
                 settings.closeCallback && settings.closeCallback(_this.destroy,$('#dialog-content'));
                 _this.destroy();
             });
 
-            $('#dialog-cancel').on('click',function(event) {
+            $('.dialog-cancel').on('click',function(event) {
                 settings.cancelCallback && settings.cancelCallback(_this.destroy,$('#dialog-content'));
                 if (!settings.autoClose) return;
                 _this.destroy();

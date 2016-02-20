@@ -111,15 +111,15 @@ var send = function (type, api, parameters, success, async) {
     };
     // 订单收款之后推送给财务收款信息
     server.deposit_order_apply = function (data, callback) {
-        return send('post', contextPath + '/deposit/order/apply.json', data, callback);
+        return send('get', contextPath + '/deposit/order/apply.json', data, callback);
     };
     // 确认当前的收款信息无误
     server.deposit_order_confirm = function (data, callback) {
-        return send('post', contextPath + '/deposit/order/confirm.json', data, callback);
+        return send('get', contextPath + '/deposit/order/confirm.json', data, callback);
     };
     // 撤回收款记录
     server.deposit_order_cancel = function (data, callback) {
-        return send('post', contextPath + '/deposit/order/cancel.json', data, callback);
+        return send('get', contextPath + '/deposit/order/cancel.json', data, callback);
     };
 
 
@@ -134,25 +134,25 @@ var send = function (type, api, parameters, success, async) {
     };
     // 人工大款成功后，确认打款成功
     server.withdraw_order_pay_manual_confirm = function (data, callback) {
-        return send('post', contextPath + '/withdraw/order/pay/manual/confirm.json', data, callback);
+        return send('get', contextPath + '/withdraw/order/pay/manual/confirm.json', data, callback);
     };
     // 系统打款
     server.withdraw_order_pay_auto_do = function (data, callback) {
-        return send('post', contextPath + '/withdraw/order/pay/auto/do.json', data, callback);
+        return send('get', contextPath + '/withdraw/order/pay/auto/do.json', data, callback);
     };
     // 撤回打款
     server.withdraw_order_cancel = function (data, callback) {
-        return send('post', contextPath + '/withdraw/order/cancel.json', data, callback);
+        return send('get', contextPath + '/withdraw/order/cancel.json', data, callback);
     };
     // TODO 接收系统代付结果通知
 
     // 提款申请
     server.withdraw_order_apply = function (data, callback) {
-        return send('post', contextPath + '/withdraw/order/apply.json', data, callback);
+        return send('get', contextPath + '/withdraw/order/apply.json', data, callback);
     };
     // 财务进行重新补款
     server.withdraw_order_reapply = function (data, callback) {
-        return send('post', contextPath + '/withdraw/order/reapply.json', data, callback);
+        return send('get', contextPath + '/withdraw/order/reapply.json', data, callback);
     };
 
     /*
@@ -161,23 +161,23 @@ var send = function (type, api, parameters, success, async) {
 
     // 未结算
     server.not_settle = function (data, callback) {
-        return send('post', contextPath + '/money/check/wait/list.json', data, callback);
+        return send('get', contextPath + '/money/check/wait/list.json', data, callback);
     };
     // 获取历史对账数据
     server.history_data = function (data, callback) {
-        return send('post', contextPath + '/money/check/history/list.json', data, callback);
+        return send('get', contextPath + '/money/check/history/list.json', data, callback);
     };
     // 历史对账统计
     server.history_count = function (data, callback) {
-        return send('post', contextPath + '/money/check/history/statistics.json', data, callback);
+        return send('get', contextPath + '/money/check/history/statistics.json', data, callback);
     };
     // 扎账接口
     server.settle_accounts = function (data, callback) {
-        return send('post', contextPath + '/money/check/wait/handle.json', data, callback);
+        return send('get', contextPath + '/money/check/wait/handle.json', data, callback);
     };
     // 添加补贴
     server.add_allowance = function (data, callback) {
-        return send('post', contextPath + '/money/check/allowance/add.json', data, callback);
+        return send('get', contextPath + '/money/check/allowance/add.json', data, callback);
     };
 
     // 平台可用支出账号信息接口
