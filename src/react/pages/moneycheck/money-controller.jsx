@@ -207,7 +207,7 @@ var HistoryList = React.createClass({
             index: 0 //当前显示的某一期数据的ID;
         }
     },
-    componentDidMount(){
+    componentWillMount(){
         let server = H.server;
         let optionArr = [];
         let id = 0;
@@ -216,10 +216,12 @@ var HistoryList = React.createClass({
                 for(var i = 0 ; i < res.data.length ; i++) {
                     optionArr[i] = "第" + res.data[i].id + " 期结算 " + res.data[i].check_time;
                 }
-                if(this.props.showId == 0){
-                    id = res.data.length-1;
-                }else if(this.props.showId == 1) {
-                    id = res.data.length-2;
+                if(res.data.length > 1){
+                    if(this.props.showId == 0){
+                        id = res.data.length-1;
+                    }else if(this.props.showId == 1) {
+                        id = res.data.length-2;
+                    }
                 }
                 this.setState({
                     optionArr: optionArr,

@@ -37,6 +37,7 @@ let WithDrawControl = React.createClass({
         return {
             infoPanelIsShow: false,
             infoPanelFlag: {},
+            orderInfoData: [],
             filterCondition: {},
             btnGroupFilter: [
                 {
@@ -142,9 +143,20 @@ let WithDrawControl = React.createClass({
         });
     },
     showInfoPanel(value){
+        let server = H.server,
+            params = {
+                batch_no: value.batch_no
+            };
         this.setState({
             infoPanelIsShow: true,
             infoPanelFlag: value
+        });
+        server.withdraw_order_info_list(params,(res)=>{
+            if (res.code == 0) {
+                this.setState({
+                    orderInfoData: res.data
+                });
+            }
         });
     },
     hideInfoPanel(){
@@ -180,7 +192,7 @@ let WithDrawControl = React.createClass({
                 </div>
                 <div className="section-table">
 
-                    <Table res={this.props.data} titles={headArr} types="1">
+                    <Table titles={headArr} types="1">
                         <tbody>
                             {this.props.data.map((value,index)=>{
                                 return (
@@ -207,7 +219,7 @@ let WithDrawControl = React.createClass({
 
                 <div className={ this.state.infoPanelIsShow ? "section-tr-info show" : "section-tr-info" }>
                     <i className="info-close-btn" title="点击隐藏弹出层" onClick={this.hideInfoPanel}>close</i>
-                    <TrInfo infoFlag={this.state.infoPanelFlag}/>
+                    <TrInfo infoData={this.state.orderInfoData} infoFlag={this.state.infoPanelFlag}/>
                 </div>
             </div>
         );
