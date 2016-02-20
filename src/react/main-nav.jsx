@@ -18,9 +18,6 @@ let NavController = React.createClass({
             ]
         }
     },
-    stateUpdated(state){
-        this.setState(state);
-    },
     getChildContext: function() {
         return {
             tabs: this.state.tab,
@@ -31,11 +28,41 @@ let NavController = React.createClass({
         tabs: React.PropTypes.array,
         changes: React.PropTypes.func
     },
+    stateUpdated(state){
+        this.setState(state);
+    },
     homeClickHandler(){
-        console.log(123);
         this.state.tab.map((el,index)=>{
             el.selected = (el.id == 0) ? true : false;
+            return el;
         });
+        this.stateUpdated(this.state.tab);
+    },
+    setIconClickHandler(id){
+        let hasRendered = false;
+        $('.nav.nav-list')
+            .find('a')
+            .parent()
+            .removeClass('active');
+
+        this.state.tab.map((el,index)=>{
+            if (el.id === id) {
+                el.selected = true;
+                hasRendered = true;
+            } else {
+                el.selected = false;
+            }
+            return el;
+        });
+        
+        if ( !hasRendered ) {
+            this.state.tab.push({
+                id : -1,
+                name : "个人信息设置",
+                url : "messageManagement",
+                selected : true
+            });
+        }
         this.stateUpdated(this.state.tab);
     },
     render(){
@@ -51,8 +78,8 @@ let NavController = React.createClass({
                             <div className="welcome">welcome</div>
                             <div className="username">{this.props.menu.data.user.name}</div>
                         </div>
-                        <div className="user-status">
-                            <i className="glyphicon glyphicon-heart" aria-hidden="true"></i>
+                        <div className="user-status" id="nid_-1" onClick={this.setIconClickHandler.bind(this,-1)}>
+                            <i className="glyphicon glyphicon-cog" aria-hidden="true" title="设置个人信息"></i>
                         </div>
                     </div>
                     {/*nav left menu*/}
