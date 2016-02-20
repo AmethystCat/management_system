@@ -154,6 +154,10 @@ var send = function (type, api, parameters, success, async) {
     server.withdraw_order_reapply = function (data, callback) {
         return send('post', contextPath + '/withdraw/order/reapply.json', data, callback);
     };
+    //查询订单详情数据接口
+    server.withdraw_order_info_list = function (data, callback) {
+        return send('get', contextPath + '/withdraw/order/info/list.json', data, callback);
+    };
 
     /*
     * 汇总对账接口
