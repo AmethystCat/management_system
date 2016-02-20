@@ -1,5 +1,7 @@
 @charset "utf-8";
-body {}
+body {
+  font-family: "Microsoft YaHei";
+}
 .section-site-holder {
   position: relative;
   overflow: hidden;
@@ -142,11 +144,20 @@ body {}
 
     .user-status {
       //position: absolute;
-      margin-top: 25px;
-      margin-left: 5px;
       display: inline-block;
+      width: 19px;
+      height: 19px;
+      margin: 22px 0 0 5px;
+      padding: 2px 0 0 3px;
+      border-radius: 50%;
+      vertical-align: top;
       font-size: 12px;
-      color: #fd6c6d;
+      color: #ccc;
+      .transition(300ms ease);
+      &:hover {
+        background-color: #666;
+        color: @primary;
+      }
     }
   }
 
@@ -209,6 +220,35 @@ body {}
       }
     }
   }
+
+  .nav{
+    li{
+      &:first-child {
+        >a>i {
+          &:before {
+            content: "\e148";
+          }
+        }
+
+        &+li {
+          >a>i {
+            vertical-align: -2px;
+            &:before {
+              content: "\e177";
+            }
+          }
+        }
+      }
+
+      &:last-child {
+        >a>i {
+          &:before {
+            content: "\e032";
+          }
+        }
+      }
+    }
+  }
 }
 .submenu.current > a i.arrow-right {
   .transition(200ms ease);
@@ -231,6 +271,11 @@ body {}
     input {
       margin-right: @pad;
       border-radius: 0;
+    }
+    span {
+      /*日期筛选间的中横线样式*/
+      padding-right: @pad;
+      color: #ccc;
     }
     .search-w {
       padding: @pad 0;
@@ -334,6 +379,31 @@ body {}
       &:hover {
         &:after {
           border-top-color: @primary;
+        }
+      }
+    }
+
+    .info-main-w {
+      padding:0 @pad*20 0 @pad*2;
+    }
+    .table {
+      border-top: 1px solid #333;
+      th {
+        background-color: #333;
+        border: 1px solid #333;
+        color: #fff;
+      }
+      tr {
+        .transition(100ms ease);
+        &:hover {
+          background-color: rgba(0,0,0,.1);
+          td {
+            color: lighten(@primary,10%);
+          }
+        }
+        td {
+          border: 1px solid #333;
+          vertical-align: middle;
         }
       }
     }
