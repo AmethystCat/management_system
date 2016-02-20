@@ -21,14 +21,14 @@ let NavLi = React.createClass({
         let menuData = (elData.id && elData.name) ? elData : this.props.data ,
             hasRendered = false;
 
-        this.context.tabs.map(function (el,index) {
+        this.context.tabs.map((el,index)=>{
             if ( el.id != menuData.id ) {
                 el.selected = false;
             }else if ( el.id == menuData.id ){
                 el.selected = true;
                 hasRendered = true;
             }
-        }.bind(this));
+        });
 
         if (hasRendered) {
             this.context.changes(this.context.tabs);
