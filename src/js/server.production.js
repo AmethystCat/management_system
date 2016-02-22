@@ -85,6 +85,29 @@ var send = function (type, api, parameters, success, async) {
     return request;
 };
 
+    /**
+     * 登录/退出
+     * */
+    // 登录
+    server.login = function (data, callback) {
+        return send('post', contextPath + '/common/login', data, callback);
+    };
+    // 退出
+    server.logout = function (data, callback) {
+        return send('post', contextPath + '/common/logout', data, callback);
+    };
+
+    /**
+     * 用户信息
+     * */
+    // 获取用户信息
+    server.user_profile = function(data, callback){
+        return send('get', contextPath + '/user/profile', data, callback);
+    };
+    // 修改用户二级密码
+    server.user_optpassword_set = function(data, callback){
+        return send('post', contextPath + '/user/opt-password/set', data, callback);
+    };
 
     /**
      * 导航

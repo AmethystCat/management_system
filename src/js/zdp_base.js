@@ -215,6 +215,7 @@
     H.Modal = function (option) {
         //定义dialog对象
         var D = function(option){
+            this.settings = {};
             this.init(option);
         };
         //定义dialog的方法
@@ -240,34 +241,36 @@
             if (H.isString(option)) {
                 option = {content:option};
             }
-            var settings = $.extend(true, defaults, option || {});
-            this.render(settings);
+
+            this.settings = $.extend(true, defaults, option || {});
+            this.render(this.settings);
         });
         D.method('render',function(settings){
             var _this = this;
             //创建dom
             this.createDom(settings);
             //绑定事件
-            $('.dialog-ok').on('click',function(event) {
-                settings.okCallback && settings.okCallback(_this.destroy,$('#dialog-content'));
-                if (!settings.autoClose) return;
-                _this.destroy();
-            });
 
             $('.dialog-close').on('click',function(event) {
                 settings.closeCallback && settings.closeCallback(_this.destroy,$('#dialog-content'));
                 _this.destroy();
             });
 
+            $('.dialog-ok').on('click',function(event) {
+                settings.okCallback && settings.okCallback(_this.destroy,$('#dialog-content'),{hideOkBtn:_this.hideOkBtn,showCancelBtn:_this.showCancelBtn.bind(_this)});
+                if (!_this.settings.autoClose) return;
+                _this.destroy();
+            });
+
             $('.dialog-cancel').on('click',function(event) {
                 settings.cancelCallback && settings.cancelCallback(_this.destroy,$('#dialog-content'));
-                if (!settings.autoClose) return;
+                if (!_this.settings.autoClose) return;
                 _this.destroy();
             });
 
             $('body').on('click','#dialog-mask',function(){
                 if (settings.maskClose) {
-                    if (!settings.autoClose) return;
+                    if (!_this.settings.autoClose) return;
                     _this.destroy();
                 }
             });
@@ -301,6 +304,15 @@
             $('.dialog-body').remove();
         });
 
+        D.method('hideOkBtn',function() {
+            $('.dialog-ok').hide();
+        });
+
+        D.method('showCancelBtn',function() {
+            this.settings.autoClose = true;
+            $('.dialog-cancel').show();
+        });
+
         return new D(option);
     };
 
@@ -316,7 +328,7 @@
     };
 
     H.priceSwitch = function(price) {
-        var money = price >= 0 ? price/100 : -1;
+        var money = (price || price==0) ? price/100 : -1;
         return money;
     };
 
