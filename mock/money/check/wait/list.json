@@ -9,7 +9,7 @@
     "refund_amount": -10000,
     "deduct_amount": -1000,
     "payment_fee": -1000,
-    "loss_remove": 320000
+    "total_loss": 320000
   },
   "message": ""
 }

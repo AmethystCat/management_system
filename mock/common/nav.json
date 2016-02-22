@@ -1,0 +1,31 @@
+{
+    "code": 0,
+    "data": {
+        "user": {
+            "name": "张工",
+            "role": "财务管理员",
+            "last_login_time": "上次登录时间"
+        },
+        "menu": [
+            {
+                "id": "1",
+                "name": "已收款",
+                "url": "/deposit/order/list",
+                "sub_menu": []
+            },
+            {
+                "id": "2",
+                "name": "商家提现",
+                "url": "/withdraw/seller/list",
+                "sub_menu": []
+            },
+            {
+                "id": "3",
+                "name": "汇总对账",
+                "url": "/money/check",
+                "sub_menu": []
+            }
+        ]
+    },
+    "message": ""
+}
