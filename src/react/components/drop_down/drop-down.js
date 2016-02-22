@@ -24,11 +24,21 @@ var DropDown = React.createClass({
         if(this.props.selectVal){
             val = this.props.selectVal;
         }
+        var checkData = "";
+        if(this.props.checkData){
+            checkData = this.props.checkData;
+        }
         return (
             <select value={val} className="form-control" onChange={this.selChange} ref="selectNode">
                 {
                     React.Children.map(this.state.optionArr,function (name,index) {
-                        return <option value={index} >{name}</option>;
+                        var optionVal = "";
+                        if(checkData[index]){
+                            optionVal = checkData[index];
+                        }else {
+                            optionVal = index;
+                        }
+                        return <option value={optionVal} key={index} >{name}</option>;
                     })
                 }
             </select>

@@ -66,7 +66,6 @@ var PageCtrlBar = React.createClass({
             _maxPage: max,
             numArr: arr
         }, ()=>{
-            console.log("当前页：" + this.state.pageNum);
             callback && callback(n);
         });
     },
