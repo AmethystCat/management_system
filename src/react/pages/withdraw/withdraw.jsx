@@ -55,4 +55,4 @@ var WithDraw = React.createClass({
     }
 });
 
-module.exports = WithDraw;
+export default WithDraw;

@@ -48,4 +48,4 @@ let Deposit = React.createClass({
     }
 });
 
-module.exports = Deposit;
+export default Deposit;

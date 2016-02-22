@@ -12,7 +12,6 @@ var Home = React.createClass({
     componentWillMount(){
         let server = H.server;
         server.nav({},function(res){
-            console.log(res);
             if (res.code == 0) {
                 this.setState({user:res.data.user});
             } else {
@@ -30,4 +29,4 @@ var Home = React.createClass({
     }
 });
 
-module.exports = Home;
+export default Home;
